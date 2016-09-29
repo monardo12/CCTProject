@@ -5,14 +5,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cct.dao.TestDAO;
 import com.cct.redis.RedisClient;
 
 @Controller
 public class HelloWorldController {
-
-	@Autowired
-	private TestDAO testDAO;
 
 	@Autowired
 	private RedisClient redisClient;
@@ -20,8 +16,6 @@ public class HelloWorldController {
 	@RequestMapping("/")
 	@ResponseBody
 	public String helloWorld(){
-//		int total = testDAO.countServicios();
-
 		Object obj = redisClient.get("key");
 		if(obj == null){
 			redisClient.put("key", "1");
