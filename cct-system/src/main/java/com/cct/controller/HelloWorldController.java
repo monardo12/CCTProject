@@ -13,15 +13,15 @@ public class HelloWorldController {
 
 	@Autowired
 	private TestDAO testDAO;
-	
+
 	@Autowired
 	private RedisClient redisClient;
-	
+
 	@RequestMapping("/")
 	@ResponseBody
 	public String helloWorld(){
 //		int total = testDAO.countServicios();
-		
+
 		Object obj = redisClient.get("key");
 		if(obj == null){
 			redisClient.put("key", "1");
@@ -30,10 +30,10 @@ public class HelloWorldController {
 			value++;
 			redisClient.put("key", value + "");
 		}
-		
+
 		int realValue = Integer.parseInt((String) redisClient.get("key"));
-		
+
 		return "Value: " + realValue;
 	}
-	
+
 }
