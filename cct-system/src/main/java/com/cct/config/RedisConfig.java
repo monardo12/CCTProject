@@ -10,18 +10,13 @@ import org.springframework.data.redis.core.RedisTemplate;
 @Configuration
 public class RedisConfig {
 
-	@Value("${redis.hostname}")
-    private String redisHostName;
-
-    @Value("${redis.port}")
-    private int redisPort;
-
 	@Bean
 	RedisConnectionFactory connectionFactory() {
 		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
 		jedisConnectionFactory.setUsePool(true);
-		jedisConnectionFactory.setHostName(redisHostName);
-		jedisConnectionFactory.setPort(redisPort);
+		jedisConnectionFactory.setHostName(System.getenv("REDIS_HOSTNAME"));
+		jedisConnectionFactory.setPort(Integer.parseInt(System.getenv("REDIS_PORT")));
+		jedisConnectionFactory.setPassword(System.getenv("REDIS_PASSWORD"));
 		return jedisConnectionFactory;
 	}
 
