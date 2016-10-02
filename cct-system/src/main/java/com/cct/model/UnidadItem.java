@@ -12,7 +12,7 @@ public class UnidadItem implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer idunidaditem;
+	private Long idunidaditem;
 
 	private String estado;
 
@@ -27,11 +27,11 @@ public class UnidadItem implements Serializable {
 	public UnidadItem() {
 	}
 
-	public Integer getIdunidaditem() {
+	public Long getIdunidaditem() {
 		return this.idunidaditem;
 	}
 
-	public void setIdunidaditem(Integer idunidaditem) {
+	public void setIdunidaditem(Long idunidaditem) {
 		this.idunidaditem = idunidaditem;
 	}
 

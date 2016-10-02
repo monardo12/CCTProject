@@ -11,7 +11,7 @@ public class Socio implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer idsocio;
+	private Long idsocio;
 
 	private String direccion;
 
@@ -28,11 +28,11 @@ public class Socio implements Serializable {
 	public Socio() {
 	}
 
-	public Integer getIdsocio() {
+	public Long getIdsocio() {
 		return this.idsocio;
 	}
 
-	public void setIdsocio(Integer idsocio) {
+	public void setIdsocio(Long idsocio) {
 		this.idsocio = idsocio;
 	}
 

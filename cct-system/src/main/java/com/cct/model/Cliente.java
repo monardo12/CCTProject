@@ -11,7 +11,7 @@ public class Cliente implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer idcliente;
+	private Long idcliente;
 
 	private String email;
 
@@ -26,11 +26,11 @@ public class Cliente implements Serializable {
 	public Cliente() {
 	}
 
-	public Integer getIdcliente() {
+	public Long getIdcliente() {
 		return this.idcliente;
 	}
 
-	public void setIdcliente(Integer idcliente) {
+	public void setIdcliente(Long idcliente) {
 		this.idcliente = idcliente;
 	}
 

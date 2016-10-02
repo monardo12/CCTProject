@@ -11,7 +11,7 @@ public class Item implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer iditem;
+	private Long iditem;
 
 	private String descripcion;
 
@@ -34,11 +34,11 @@ public class Item implements Serializable {
 	public Item() {
 	}
 
-	public Integer getIditem() {
+	public Long getIditem() {
 		return this.iditem;
 	}
 
-	public void setIditem(Integer iditem) {
+	public void setIditem(Long iditem) {
 		this.iditem = iditem;
 	}
 

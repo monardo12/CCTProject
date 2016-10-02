@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cct.dto.Email;
+import com.cct.model.Cliente;
 import com.cct.redis.RedisClient;
+import com.cct.repo.ClienteRepository;
 
 @Controller
 public class HelloWorldController {
@@ -39,10 +41,13 @@ public class HelloWorldController {
 		return "Value: " + realValue;
 	}
 
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
 	@RequestMapping("/hello")
 	@ResponseBody
-	public String prueba(){
-		return "Hola";
+	public Cliente prueba(){
+		return clienteRepository.findOne(1L);
 	}
 
 	@RequestMapping(value = "/message", method = RequestMethod.POST)

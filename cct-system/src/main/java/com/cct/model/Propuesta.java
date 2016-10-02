@@ -12,7 +12,7 @@ public class Propuesta implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer idpropuesta;
+	private Long idpropuesta;
 
 	private Integer costo;
 
@@ -36,11 +36,11 @@ public class Propuesta implements Serializable {
 	public Propuesta() {
 	}
 
-	public Integer getIdpropuesta() {
+	public Long getIdpropuesta() {
 		return this.idpropuesta;
 	}
 
-	public void setIdpropuesta(Integer idpropuesta) {
+	public void setIdpropuesta(Long idpropuesta) {
 		this.idpropuesta = idpropuesta;
 	}
 

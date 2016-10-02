@@ -13,7 +13,7 @@ public class PlanVenta implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer idplanventa;
+	private Long idplanventa;
 
 	private String descripcion;
 
@@ -50,11 +50,11 @@ public class PlanVenta implements Serializable {
 	public PlanVenta() {
 	}
 
-	public Integer getIdplanventa() {
+	public Long getIdplanventa() {
 		return this.idplanventa;
 	}
 
-	public void setIdplanventa(Integer idplanventa) {
+	public void setIdplanventa(Long idplanventa) {
 		this.idplanventa = idplanventa;
 	}
 

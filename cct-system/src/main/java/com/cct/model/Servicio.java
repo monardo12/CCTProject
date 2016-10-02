@@ -11,7 +11,7 @@ public class Servicio implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer idservicio;
+	private Long idservicio;
 
 	private String descripcion;
 
@@ -28,11 +28,11 @@ public class Servicio implements Serializable {
 	public Servicio() {
 	}
 
-	public Integer getIdservicio() {
+	public Long getIdservicio() {
 		return this.idservicio;
 	}
 
-	public void setIdservicio(Integer idservicio) {
+	public void setIdservicio(Long idservicio) {
 		this.idservicio = idservicio;
 	}
 

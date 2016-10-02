@@ -11,7 +11,7 @@ public class PlanVentaItem implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer idplanventaitem;
+	private Long idplanventaitem;
 
 	//bi-directional many-to-one association to Item
 	@ManyToOne
@@ -26,11 +26,11 @@ public class PlanVentaItem implements Serializable {
 	public PlanVentaItem() {
 	}
 
-	public Integer getIdplanventaitem() {
+	public Long getIdplanventaitem() {
 		return this.idplanventaitem;
 	}
 
-	public void setIdplanventaitem(Integer idplanventaitem) {
+	public void setIdplanventaitem(Long idplanventaitem) {
 		this.idplanventaitem = idplanventaitem;
 	}
 

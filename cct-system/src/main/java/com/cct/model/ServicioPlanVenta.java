@@ -11,7 +11,7 @@ public class ServicioPlanVenta implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer idservicioplanventa;
+	private Long idservicioplanventa;
 
 	//bi-directional many-to-one association to PlanVenta
 	@ManyToOne
@@ -26,11 +26,11 @@ public class ServicioPlanVenta implements Serializable {
 	public ServicioPlanVenta() {
 	}
 
-	public Integer getIdservicioplanventa() {
+	public Long getIdservicioplanventa() {
 		return this.idservicioplanventa;
 	}
 
-	public void setIdservicioplanventa(Integer idservicioplanventa) {
+	public void setIdservicioplanventa(Long idservicioplanventa) {
 		this.idservicioplanventa = idservicioplanventa;
 	}
 
