@@ -1,8 +1,16 @@
 package com.cct.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
@@ -48,6 +56,7 @@ public class Usuario implements Serializable {
 		this.nombre = nombre;
 	}
 
+	@JsonIgnore
 	public List<PlanVenta> getPlanVentas() {
 		return this.planVentas;
 	}

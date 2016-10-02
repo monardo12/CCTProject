@@ -1,9 +1,17 @@
 package com.cct.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @NamedQuery(name="Propuesta.findAll", query="SELECT p FROM Propuesta p")
@@ -23,10 +31,6 @@ public class Propuesta implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	private Date fechainicio;
-
-	//bi-directional many-to-one association to PlanVenta
-	@OneToMany(mappedBy="propuesta")
-	private List<PlanVenta> planVentas;
 
 	//bi-directional many-to-one association to Socio
 	@ManyToOne
@@ -74,28 +78,6 @@ public class Propuesta implements Serializable {
 
 	public void setFechainicio(Date fechainicio) {
 		this.fechainicio = fechainicio;
-	}
-
-	public List<PlanVenta> getPlanVentas() {
-		return this.planVentas;
-	}
-
-	public void setPlanVentas(List<PlanVenta> planVentas) {
-		this.planVentas = planVentas;
-	}
-
-	public PlanVenta addPlanVenta(PlanVenta planVenta) {
-		getPlanVentas().add(planVenta);
-		planVenta.setPropuesta(this);
-
-		return planVenta;
-	}
-
-	public PlanVenta removePlanVenta(PlanVenta planVenta) {
-		getPlanVentas().remove(planVenta);
-		planVenta.setPropuesta(null);
-
-		return planVenta;
 	}
 
 	public Socio getSocio() {
