@@ -21,3 +21,18 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders
+
+
+# Locally stored "Eclipse launch configurations"
+*.launch
