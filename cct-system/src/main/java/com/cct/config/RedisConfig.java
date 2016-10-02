@@ -13,9 +13,9 @@ public class RedisConfig {
 	RedisConnectionFactory connectionFactory() {
 		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
 		jedisConnectionFactory.setUsePool(true);
-		jedisConnectionFactory.setHostName("localhost");
-		jedisConnectionFactory.setPort(6379);
-//		jedisConnectionFactory.setPassword(System.getenv("REDIS_PASSWORD"));
+		jedisConnectionFactory.setHostName(System.getenv("REDIS_HOSTNAME"));
+		jedisConnectionFactory.setPort(Integer.parseInt(System.getenv("REDIS_PORT")));
+		jedisConnectionFactory.setPassword(System.getenv("REDIS_PASSWORD"));
 		return jedisConnectionFactory;
 	}
 
