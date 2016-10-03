@@ -29,6 +29,10 @@ public class Usuario implements Serializable {
 	@OneToMany(mappedBy="usuario")
 	private List<PlanVenta> planVentas;
 
+	//bi-directional many-to-one association to Reporte
+	@OneToMany(mappedBy="usuario")
+	private List<Reporte> reportes;
+
 	public Usuario() {
 	}
 
@@ -65,18 +69,12 @@ public class Usuario implements Serializable {
 		this.planVentas = planVentas;
 	}
 
-	public PlanVenta addPlanVenta(PlanVenta planVenta) {
-		getPlanVentas().add(planVenta);
-		planVenta.setUsuario(this);
-
-		return planVenta;
+	public List<Reporte> getReportes() {
+		return this.reportes;
 	}
 
-	public PlanVenta removePlanVenta(PlanVenta planVenta) {
-		getPlanVentas().remove(planVenta);
-		planVenta.setUsuario(null);
-
-		return planVenta;
+	public void setReportes(List<Reporte> reportes) {
+		this.reportes = reportes;
 	}
 
 }

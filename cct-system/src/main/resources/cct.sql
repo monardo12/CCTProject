@@ -30,6 +30,15 @@ CREATE TABLE item (
   PRIMARY KEY(idItem)
 );
 
+CREATE TABLE inventario (
+  idInventario SERIAL,
+  idItem INTEGER NOT NULL,
+  fechaCompra DATE NOT NULL,
+  estado VARCHAR NOT NULL,
+  PRIMARY KEY(idInventario),
+  FOREIGN KEY (idItem) REFERENCES item(idItem)
+);
+
 CREATE TABLE propuesta (
   idPropuesta SERIAL,
   idSocio INTEGER NOT NULL,
@@ -48,19 +57,9 @@ CREATE TABLE servicio (
   PRIMARY KEY(idServicio)
 );
 
-CREATE TABLE unidad_item (
-  idUnidadItem SERIAL,
-  idItem INTEGER NOT NULL,
-  fechaCompra DATE NOT NULL,
-  estado VARCHAR NOT NULL,
-  PRIMARY KEY(idUnidadItem),
-  FOREIGN KEY (idItem) REFERENCES item(idItem)
-);
-
 CREATE TABLE plan_venta (
   idPlanVenta SERIAL,
   idUsuario INTEGER NOT NULL,
-  idPropuesta INTEGER NOT NULL,
   idCliente INTEGER NOT NULL,
   nombre VARCHAR NOT NULL,
   descripcion VARCHAR NOT NULL,
@@ -68,33 +67,55 @@ CREATE TABLE plan_venta (
   estado VARCHAR NOT NULL,
   PRIMARY KEY(idPlanVenta),
   FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario),
-  FOREIGN KEY (idCliente) REFERENCES cliente(idCliente),
-  FOREIGN KEY (idPropuesta) REFERENCES propuesta(idPropuesta)
+  FOREIGN KEY (idCliente) REFERENCES cliente(idCliente)
 );
 
-CREATE TABLE plan_venta_item (
-  idPlanVentaItem SERIAL,
-  idPlanVenta INTEGER NOT NULL,
+CREATE TABLE reporte (
+  idReporte SERIAL,
+  idUsuario INTEGER NOT NULL,
+  tipo VARCHAR NULL,
+  estado VARCHAR NULL,
+  url VARCHAR NULL,
+  PRIMARY KEY(idReporte),
+  FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario)
+);
+
+CREATE TABLE servicio_has_item (
+  idServicio INTEGER NOT NULL,
   idItem INTEGER NOT NULL,
-  PRIMARY KEY(idPlanVentaItem),
+  PRIMARY KEY(idServicio, idItem),
+  FOREIGN KEY (idServicio) REFERENCES servicio(idServicio),
+  FOREIGN KEY (idItem) REFERENCES item(idItem)
+);
+
+CREATE TABLE plan_venta_has_inventario (
+  idPlanVenta INTEGER NOT NULL,
+  idInventario INTEGER NOT NULL,
+  PRIMARY KEY(idPlanVenta, idInventario),
+  FOREIGN KEY (idPlanVenta) REFERENCES plan_venta(idPlanVenta),
+  FOREIGN KEY (idInventario) REFERENCES inventario(idInventario)
+);
+
+CREATE TABLE plan_venta_has_item (
+  idPlanVenta INTEGER NOT NULL,
+  idItem INTEGER NOT NULL,  
+  PRIMARY KEY(idPlanVenta, idItem),
   FOREIGN KEY (idPlanVenta) REFERENCES plan_venta(idPlanVenta),
   FOREIGN KEY (idItem) REFERENCES item(idItem)
 );
 
-CREATE TABLE servicio_item (
-  idServicioItem SERIAL,
-  idItem INTEGER NOT NULL,
+CREATE TABLE plan_venta_has_servicio (
+  idPlanVenta INTEGER NOT NULL,
   idServicio INTEGER NOT NULL,
-  PRIMARY KEY(idServicioItem),
-  FOREIGN KEY (idItem) REFERENCES item(idItem),
+  PRIMARY KEY(idPlanVenta, idServicio),
+  FOREIGN KEY (idPlanVenta) REFERENCES plan_venta(idPlanVenta),
   FOREIGN KEY (idServicio) REFERENCES servicio(idServicio)
 );
 
-CREATE TABLE servicio_plan_venta (
-  idServicioPlanVenta SERIAL,
+CREATE TABLE plan_venta_has_propuesta (  
   idPlanVenta INTEGER NOT NULL,
-  idServicio INTEGER NOT NULL,
-  PRIMARY KEY(idServicioPlanVenta),
+  idPropuesta INTEGER NOT NULL,
+  PRIMARY KEY(idPlanVenta, idPropuesta),
   FOREIGN KEY (idPlanVenta) REFERENCES plan_venta(idPlanVenta),
-  FOREIGN KEY (idServicio) REFERENCES servicio(idServicio)
+  FOREIGN KEY (idPropuesta) REFERENCES propuesta(idPropuesta)
 );

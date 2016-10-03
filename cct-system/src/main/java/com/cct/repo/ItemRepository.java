@@ -1,9 +1,9 @@
 package com.cct.repo;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cct.model.Item;
 
-public interface ItemRepository extends CrudRepository<Item, Long>{
+public interface ItemRepository extends JpaRepository<Item, Long>{
 
 }

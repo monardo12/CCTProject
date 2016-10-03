@@ -1,25 +1,21 @@
 package com.cct.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Date;
+import java.util.List;
 
 @Entity
-@NamedQuery(name="Propuesta.findAll", query="SELECT p FROM Propuesta p")
+@NamedQuery(name = "Propuesta.findAll", query = "SELECT p FROM Propuesta p")
 public class Propuesta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idpropuesta;
 
 	private Integer costo;
@@ -32,9 +28,13 @@ public class Propuesta implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date fechainicio;
 
-	//bi-directional many-to-one association to Socio
+	// bi-directional many-to-many association to PlanVenta
+	@ManyToMany(mappedBy = "propuestas")
+	private List<PlanVenta> planVentas;
+
+	// bi-directional many-to-one association to Socio
 	@ManyToOne
-	@JoinColumn(name="idsocio")
+	@JoinColumn(name = "idsocio")
 	private Socio socio;
 
 	public Propuesta() {
@@ -78,6 +78,15 @@ public class Propuesta implements Serializable {
 
 	public void setFechainicio(Date fechainicio) {
 		this.fechainicio = fechainicio;
+	}
+
+	@JsonIgnore
+	public List<PlanVenta> getPlanVentas() {
+		return this.planVentas;
+	}
+
+	public void setPlanVentas(List<PlanVenta> planVentas) {
+		this.planVentas = planVentas;
 	}
 
 	public Socio getSocio() {

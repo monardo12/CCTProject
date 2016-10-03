@@ -6,13 +6,13 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name="plan_venta")
-@NamedQuery(name="PlanVenta.findAll", query="SELECT p FROM PlanVenta p")
+@Table(name = "plan_venta")
+@NamedQuery(name = "PlanVenta.findAll", query = "SELECT p FROM PlanVenta p")
 public class PlanVenta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idplanventa;
 
 	private String descripcion;
@@ -24,28 +24,35 @@ public class PlanVenta implements Serializable {
 
 	private String nombre;
 
-	//bi-directional many-to-one association to Cliente
+	// bi-directional many-to-one association to Cliente
 	@ManyToOne
-	@JoinColumn(name="idcliente")
+	@JoinColumn(name = "idcliente")
 	private Cliente cliente;
 
-	//bi-directional many-to-one association to Propuesta
-	@ManyToOne
-	@JoinColumn(name="idpropuesta")
-	private Propuesta propuesta;
+	// bi-directional many-to-many association to Inventario
+	@ManyToMany
+	@JoinTable(name = "plan_venta_has_inventario", joinColumns = { @JoinColumn(name = "idplanventa") }, inverseJoinColumns = { @JoinColumn(name = "idinventario") })
+	private List<Inventario> inventarios;
 
-	//bi-directional many-to-one association to Usuario
+	// bi-directional many-to-many association to Item
+	@ManyToMany
+	@JoinTable(name = "plan_venta_has_item", joinColumns = { @JoinColumn(name = "idplanventa") }, inverseJoinColumns = { @JoinColumn(name = "iditem") })
+	private List<Item> items;
+
+	// bi-directional many-to-one association to Usuario
 	@ManyToOne
-	@JoinColumn(name="idusuario")
+	@JoinColumn(name = "idusuario")
 	private Usuario usuario;
 
-	//bi-directional many-to-one association to PlanVentaItem
-	@OneToMany(mappedBy="planVenta")
-	private List<PlanVentaItem> planVentaItems;
+	// bi-directional many-to-many association to Propuesta
+	@ManyToMany
+	@JoinTable(name = "plan_venta_has_propuesta", joinColumns = { @JoinColumn(name = "idplanventa") }, inverseJoinColumns = { @JoinColumn(name = "idpropuesta") })
+	private List<Propuesta> propuestas;
 
-	//bi-directional many-to-one association to ServicioPlanVenta
-	@OneToMany(mappedBy="planVenta")
-	private List<ServicioPlanVenta> servicioPlanVentas;
+	// bi-directional many-to-many association to Servicio
+	@ManyToMany
+	@JoinTable(name = "plan_venta_has_servicio", joinColumns = { @JoinColumn(name = "idplanventa") }, inverseJoinColumns = { @JoinColumn(name = "idservicio") })
+	private List<Servicio> servicios;
 
 	public PlanVenta() {
 	}
@@ -98,12 +105,20 @@ public class PlanVenta implements Serializable {
 		this.cliente = cliente;
 	}
 
-	public Propuesta getPropuesta() {
-		return this.propuesta;
+	public List<Inventario> getInventarios() {
+		return this.inventarios;
 	}
 
-	public void setPropuesta(Propuesta propuesta) {
-		this.propuesta = propuesta;
+	public void setInventarios(List<Inventario> inventarios) {
+		this.inventarios = inventarios;
+	}
+
+	public List<Item> getItems() {
+		return this.items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 
 	public Usuario getUsuario() {
@@ -114,48 +129,20 @@ public class PlanVenta implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public List<PlanVentaItem> getPlanVentaItems() {
-		return this.planVentaItems;
+	public List<Propuesta> getPropuestas() {
+		return this.propuestas;
 	}
 
-	public void setPlanVentaItems(List<PlanVentaItem> planVentaItems) {
-		this.planVentaItems = planVentaItems;
+	public void setPropuestas(List<Propuesta> propuestas) {
+		this.propuestas = propuestas;
 	}
 
-	public PlanVentaItem addPlanVentaItem(PlanVentaItem planVentaItem) {
-		getPlanVentaItems().add(planVentaItem);
-		planVentaItem.setPlanVenta(this);
-
-		return planVentaItem;
+	public List<Servicio> getServicios() {
+		return this.servicios;
 	}
 
-	public PlanVentaItem removePlanVentaItem(PlanVentaItem planVentaItem) {
-		getPlanVentaItems().remove(planVentaItem);
-		planVentaItem.setPlanVenta(null);
-
-		return planVentaItem;
-	}
-
-	public List<ServicioPlanVenta> getServicioPlanVentas() {
-		return this.servicioPlanVentas;
-	}
-
-	public void setServicioPlanVentas(List<ServicioPlanVenta> servicioPlanVentas) {
-		this.servicioPlanVentas = servicioPlanVentas;
-	}
-
-	public ServicioPlanVenta addServicioPlanVenta(ServicioPlanVenta servicioPlanVenta) {
-		getServicioPlanVentas().add(servicioPlanVenta);
-		servicioPlanVenta.setPlanVenta(this);
-
-		return servicioPlanVenta;
-	}
-
-	public ServicioPlanVenta removeServicioPlanVenta(ServicioPlanVenta servicioPlanVenta) {
-		getServicioPlanVentas().remove(servicioPlanVenta);
-		servicioPlanVenta.setPlanVenta(null);
-
-		return servicioPlanVenta;
+	public void setServicios(List<Servicio> servicios) {
+		this.servicios = servicios;
 	}
 
 }

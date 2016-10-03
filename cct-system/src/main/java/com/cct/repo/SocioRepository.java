@@ -1,9 +1,9 @@
 package com.cct.repo;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cct.model.Socio;
 
-public interface SocioRepository extends CrudRepository<Socio, Long>{
+public interface SocioRepository extends JpaRepository<Socio, Long>{
 
 }

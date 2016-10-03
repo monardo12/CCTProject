@@ -1,9 +1,9 @@
 package com.cct.repo;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cct.model.Servicio;
 
-public interface ServicioRepository extends CrudRepository<Servicio, Long>{
+public interface ServicioRepository extends JpaRepository<Servicio, Long>{
 
 }

@@ -1,16 +1,8 @@
 package com.cct.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @NamedQuery(name="Socio.findAll", query="SELECT s FROM Socio s")
@@ -75,28 +67,13 @@ public class Socio implements Serializable {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-	
-	@JsonIgnore
+
 	public List<Propuesta> getPropuestas() {
 		return this.propuestas;
 	}
 
 	public void setPropuestas(List<Propuesta> propuestas) {
 		this.propuestas = propuestas;
-	}
-
-	public Propuesta addPropuesta(Propuesta propuesta) {
-		getPropuestas().add(propuesta);
-		propuesta.setSocio(this);
-
-		return propuesta;
-	}
-
-	public Propuesta removePropuesta(Propuesta propuesta) {
-		getPropuestas().remove(propuesta);
-		propuesta.setSocio(null);
-
-		return propuesta;
 	}
 
 }
