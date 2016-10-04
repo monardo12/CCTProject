@@ -4,12 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.cct.model.Cliente;
+import com.cct.model.Cotizacion;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long>{
-
-	Cliente findByNombre(String nombre);
+public interface CotizacionRepository extends JpaRepository<Cotizacion, Long>{
 	
-	Cliente findByidcliente(Long idCliente);
+	Cotizacion findByIdCotizacion(Long idCotizacion);
 	
 }

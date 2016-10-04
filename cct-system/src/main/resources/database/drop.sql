@@ -1,3 +1,5 @@
+ALTER TABLE item DROP CONSTRAINT IF EXISTS fk_item_cotizacion;
+DROP TABLE IF EXISTS cotizacion;
 DROP TABLE IF EXISTS plan_venta_propuesta;
 DROP TABLE IF EXISTS plan_venta_item;
 DROP TABLE IF EXISTS plan_venta_inventario;
