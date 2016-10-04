@@ -1,7 +1,11 @@
 package com.cct.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.List;
 
 @Entity
@@ -61,6 +65,7 @@ public class Servicio implements Serializable {
 		this.items = items;
 	}
 
+	@JsonIgnore
 	public List<PlanVenta> getPlanVentas() {
 		return this.planVentas;
 	}
