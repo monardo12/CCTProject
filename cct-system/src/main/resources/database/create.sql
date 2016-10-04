@@ -21,12 +21,22 @@ CREATE TABLE cliente (
   telefono VARCHAR NOT NULL,
   PRIMARY KEY(idCliente)
 );
-
+/*
 CREATE TABLE item (
   idItem SERIAL,
   nombre VARCHAR NOT NULL,
   descripcion VARCHAR NOT NULL,
   precio FLOAT NOT NULL,
+  PRIMARY KEY(idItem)
+);*/
+
+CREATE TABLE item (
+  idItem SERIAL,
+  nombre VARCHAR NULL,
+  estado VARCHAR NULL,
+  descripcion VARCHAR NULL,
+  precio FLOAT NULL,
+  idcotizacion INTEGER NOT NULL,
   PRIMARY KEY(idItem)
 );
 
@@ -119,3 +129,19 @@ CREATE TABLE plan_venta_has_propuesta (
   FOREIGN KEY (idPlanVenta) REFERENCES plan_venta(idPlanVenta),
   FOREIGN KEY (idPropuesta) REFERENCES propuesta(idPropuesta)
 );
+
+CREATE TABLE cotizacion (  
+  id_cotizacion INTEGER NOT NULL,
+  id_servicio INTEGER NOT NULL,
+  id_cliente INTEGER NOT NULL,
+  fecha_creacion DATE NOT NULL,
+  cantidad_item INTEGER NOT NULL,
+  estado VARCHAR NULL,
+  valor_item INTEGER NOT NULL,
+  total INTEGER NOT NULL,
+  PRIMARY KEY(id_cotizacion),
+  FOREIGN KEY (id_servicio) REFERENCES servicio(idServicio),
+  FOREIGN KEY (id_cliente) REFERENCES cliente(idCliente)
+);
+  
+ALTER TABLE item ADD CONSTRAINT fk_item_cotizacion FOREIGN KEY (idcotizacion) REFERENCES cotizacion(id_cotizacion) ON DELETE CASCADE ON UPDATE CASCADE;

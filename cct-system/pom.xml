@@ -47,6 +47,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.3.0</version>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
@@ -64,13 +70,7 @@
 			<scope>provided</scope>
 			<type>zip</type>
 		</dependency>
-		
-		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports</artifactId>
-			<version>6.3.0</version>
-		</dependency>
-		
+
 </dependencies>
 
 	<build>
