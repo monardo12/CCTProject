@@ -69,6 +69,7 @@ public class Usuario implements Serializable {
 		this.planVentas = planVentas;
 	}
 
+	@JsonIgnore
 	public List<Reporte> getReportes() {
 		return this.reportes;
 	}
