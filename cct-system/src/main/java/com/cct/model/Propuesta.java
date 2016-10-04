@@ -18,7 +18,7 @@ public class Propuesta implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idpropuesta;
 
-	private Integer costo;
+	private double costo;
 
 	private String descripcion;
 
@@ -48,11 +48,11 @@ public class Propuesta implements Serializable {
 		this.idpropuesta = idpropuesta;
 	}
 
-	public Integer getCosto() {
+	public double getCosto() {
 		return this.costo;
 	}
 
-	public void setCosto(Integer costo) {
+	public void setCosto(double costo) {
 		this.costo = costo;
 	}
 

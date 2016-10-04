@@ -25,7 +25,7 @@ public class Cliente implements Serializable {
 
 	private String nombre;
 
-	private Integer telefono;
+	private String telefono;
 
 	//bi-directional many-to-one association to PlanVenta
 	@OneToMany(mappedBy="cliente")
@@ -58,11 +58,11 @@ public class Cliente implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public Integer getTelefono() {
+	public String getTelefono() {
 		return this.telefono;
 	}
 
-	public void setTelefono(Integer telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 
