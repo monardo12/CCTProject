@@ -1,136 +1,69 @@
 CREATE TABLE usuario (
-  idUsuario SERIAL,
+  id_usuario SERIAL,
   nombre VARCHAR NOT NULL,
   email VARCHAR NOT NULL,
-  PRIMARY KEY(idUsuario)
+  PRIMARY KEY(id_usuario)
 );
 
 CREATE TABLE socio (
-  idSocio SERIAL,
+  id_socio SERIAL,
   nombre VARCHAR NOT NULL,
   telefono VARCHAR NOT NULL,
   email VARCHAR NOT NULL,
   direccion VARCHAR NOT NULL,
-  PRIMARY KEY(idSocio)
+  PRIMARY KEY(id_socio)
 );
 
 CREATE TABLE cliente (
-  idCliente SERIAL,
+  id_cliente SERIAL,
   nombre VARCHAR NOT NULL,
   email VARCHAR NOT NULL,
   telefono VARCHAR NOT NULL,
-  PRIMARY KEY(idCliente)
-);
-/*
-CREATE TABLE item (
-  idItem SERIAL,
-  nombre VARCHAR NOT NULL,
-  descripcion VARCHAR NOT NULL,
-  precio FLOAT NOT NULL,
-  PRIMARY KEY(idItem)
-);*/
-
-CREATE TABLE item (
-  idItem SERIAL,
-  nombre VARCHAR NULL,
-  estado VARCHAR NULL,
-  descripcion VARCHAR NULL,
-  precio FLOAT NULL,
-  idcotizacion INTEGER NOT NULL,
-  PRIMARY KEY(idItem)
-);
-
-CREATE TABLE inventario (
-  idInventario SERIAL,
-  idItem INTEGER NOT NULL,
-  fechaCompra DATE NOT NULL,
-  estado VARCHAR NOT NULL,
-  PRIMARY KEY(idInventario),
-  FOREIGN KEY (idItem) REFERENCES item(idItem)
+  PRIMARY KEY(id_cliente)
 );
 
 CREATE TABLE propuesta (
-  idPropuesta SERIAL,
-  idSocio INTEGER NOT NULL,
+  id_propuesta SERIAL,
+  id_socio INTEGER NOT NULL,
   descripcion VARCHAR NOT NULL,
   costo FLOAT NOT NULL,
-  fechaInicio DATE NOT NULL,
-  fechaFin DATE NOT NULL,
-  PRIMARY KEY(idPropuesta),
-  FOREIGN KEY (idSocio) REFERENCES socio(idSocio)
+  fecha_inicio DATE NOT NULL,
+  fecha_fin DATE NOT NULL,
+  PRIMARY KEY(id_propuesta),
+  FOREIGN KEY (id_socio) REFERENCES socio(id_socio)
 );
 
 CREATE TABLE servicio (
-  idServicio SERIAL,
+  id_servicio SERIAL,
   nombre VARCHAR NOT NULL,
   descripcion VARCHAR NOT NULL,
-  PRIMARY KEY(idServicio)
+  PRIMARY KEY(id_servicio)
 );
 
 CREATE TABLE plan_venta (
-  idPlanVenta SERIAL,
-  idUsuario INTEGER NOT NULL,
-  idCliente INTEGER NOT NULL,
+  id_plan_venta SERIAL,
+  id_usuario INTEGER NOT NULL,
+  id_cliente INTEGER NOT NULL,
   nombre VARCHAR NOT NULL,
   descripcion VARCHAR NOT NULL,
-  fechaCreacion DATE NOT NULL,
+  fecha_creacion DATE NOT NULL,
   estado VARCHAR NOT NULL,
-  PRIMARY KEY(idPlanVenta),
-  FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario),
-  FOREIGN KEY (idCliente) REFERENCES cliente(idCliente)
+  PRIMARY KEY(id_plan_venta),
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+  FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
 );
 
 CREATE TABLE reporte (
-  idReporte SERIAL,
-  idUsuario INTEGER NOT NULL,
+  id_reporte SERIAL,
+  id_usuario INTEGER NOT NULL,
   tipo VARCHAR NOT NULL,
   estado VARCHAR NOT NULL,
   url VARCHAR NOT NULL,
-  PRIMARY KEY(idReporte),
-  FOREIGN KEY (idUsuario) REFERENCES usuario(idUsuario)
+  PRIMARY KEY(id_reporte),
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );
 
-CREATE TABLE servicio_has_item (
-  idServicio INTEGER NOT NULL,
-  idItem INTEGER NOT NULL,
-  PRIMARY KEY(idServicio, idItem),
-  FOREIGN KEY (idServicio) REFERENCES servicio(idServicio),
-  FOREIGN KEY (idItem) REFERENCES item(idItem)
-);
-
-CREATE TABLE plan_venta_has_inventario (
-  idPlanVenta INTEGER NOT NULL,
-  idInventario INTEGER NOT NULL,
-  PRIMARY KEY(idPlanVenta, idInventario),
-  FOREIGN KEY (idPlanVenta) REFERENCES plan_venta(idPlanVenta),
-  FOREIGN KEY (idInventario) REFERENCES inventario(idInventario)
-);
-
-CREATE TABLE plan_venta_has_item (
-  idPlanVenta INTEGER NOT NULL,
-  idItem INTEGER NOT NULL,
-  PRIMARY KEY(idPlanVenta, idItem),
-  FOREIGN KEY (idPlanVenta) REFERENCES plan_venta(idPlanVenta),
-  FOREIGN KEY (idItem) REFERENCES item(idItem)
-);
-
-CREATE TABLE plan_venta_has_servicio (
-  idPlanVenta INTEGER NOT NULL,
-  idServicio INTEGER NOT NULL,
-  PRIMARY KEY(idPlanVenta, idServicio),
-  FOREIGN KEY (idPlanVenta) REFERENCES plan_venta(idPlanVenta),
-  FOREIGN KEY (idServicio) REFERENCES servicio(idServicio)
-);
-
-CREATE TABLE plan_venta_has_propuesta (
-  idPlanVenta INTEGER NOT NULL,
-  idPropuesta INTEGER NOT NULL,
-  PRIMARY KEY(idPlanVenta, idPropuesta),
-  FOREIGN KEY (idPlanVenta) REFERENCES plan_venta(idPlanVenta),
-  FOREIGN KEY (idPropuesta) REFERENCES propuesta(idPropuesta)
-);
-
-CREATE TABLE cotizacion (  
+CREATE TABLE cotizacion (
   id_cotizacion INTEGER NOT NULL,
   id_servicio INTEGER NOT NULL,
   id_cliente INTEGER NOT NULL,
@@ -140,8 +73,66 @@ CREATE TABLE cotizacion (
   valor_item INTEGER NOT NULL,
   total INTEGER NOT NULL,
   PRIMARY KEY(id_cotizacion),
-  FOREIGN KEY (id_servicio) REFERENCES servicio(idServicio),
-  FOREIGN KEY (id_cliente) REFERENCES cliente(idCliente)
+  FOREIGN KEY (id_servicio) REFERENCES servicio(id_servicio),
+  FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
 );
-  
-ALTER TABLE item ADD CONSTRAINT fk_item_cotizacion FOREIGN KEY (idcotizacion) REFERENCES cotizacion(id_cotizacion) ON DELETE CASCADE ON UPDATE CASCADE;
+
+CREATE TABLE item (
+  id_item SERIAL,
+  id_cotizacion INTEGER NOT NULL,
+  nombre VARCHAR NULL,
+  estado VARCHAR NULL,
+  descripcion VARCHAR NULL,
+  precio FLOAT NULL,
+  PRIMARY KEY(id_item),
+  FOREIGN KEY(id_cotizacion) REFERENCES cotizacion(id_cotizacion)
+);
+
+CREATE TABLE inventario (
+  id_inventario SERIAL,
+  id_item INTEGER NOT NULL,
+  fecha_compra DATE NOT NULL,
+  estado VARCHAR NOT NULL,
+  PRIMARY KEY(id_inventario),
+  FOREIGN KEY (id_item) REFERENCES item(id_item)
+);
+
+CREATE TABLE servicio_has_item (
+  id_servicio INTEGER NOT NULL,
+  id_item INTEGER NOT NULL,
+  PRIMARY KEY(id_servicio, id_item),
+  FOREIGN KEY (id_servicio) REFERENCES servicio(id_servicio),
+  FOREIGN KEY (id_item) REFERENCES item(id_item)
+);
+
+CREATE TABLE plan_venta_has_inventario (
+  id_plan_venta INTEGER NOT NULL,
+  id_inventario INTEGER NOT NULL,
+  PRIMARY KEY(id_plan_venta, id_inventario),
+  FOREIGN KEY (id_plan_venta) REFERENCES plan_venta(id_plan_venta),
+  FOREIGN KEY (id_inventario) REFERENCES inventario(id_inventario)
+);
+
+CREATE TABLE plan_venta_has_item (
+  id_plan_venta INTEGER NOT NULL,
+  id_item INTEGER NOT NULL,
+  PRIMARY KEY(id_plan_venta, id_item),
+  FOREIGN KEY (id_plan_venta) REFERENCES plan_venta(id_plan_venta),
+  FOREIGN KEY (id_item) REFERENCES item(id_item)
+);
+
+CREATE TABLE plan_venta_has_servicio (
+  id_plan_venta INTEGER NOT NULL,
+  id_servicio INTEGER NOT NULL,
+  PRIMARY KEY(id_plan_venta, id_servicio),
+  FOREIGN KEY (id_plan_venta) REFERENCES plan_venta(id_plan_venta),
+  FOREIGN KEY (id_servicio) REFERENCES servicio(id_servicio)
+);
+
+CREATE TABLE plan_venta_has_propuesta (
+  id_plan_venta INTEGER NOT NULL,
+  id_propuesta INTEGER NOT NULL,
+  PRIMARY KEY(id_plan_venta, id_propuesta),
+  FOREIGN KEY (id_plan_venta) REFERENCES plan_venta(id_plan_venta),
+  FOREIGN KEY (id_propuesta) REFERENCES propuesta(id_propuesta)
+);

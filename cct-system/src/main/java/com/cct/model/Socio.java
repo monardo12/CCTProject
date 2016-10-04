@@ -11,11 +11,12 @@ import java.util.List;
 @Entity
 @NamedQuery(name="Socio.findAll", query="SELECT s FROM Socio s")
 public class Socio implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long idsocio;
+	private Long idSocio;
 
 	private String direccion;
 
@@ -30,14 +31,15 @@ public class Socio implements Serializable {
 	private List<Propuesta> propuestas;
 
 	public Socio() {
+
 	}
 
-	public Long getIdsocio() {
-		return this.idsocio;
+	public Long getIdSocio() {
+		return idSocio;
 	}
 
-	public void setIdsocio(Long idsocio) {
-		this.idsocio = idsocio;
+	public void setIdSocio(Long idSocio) {
+		this.idSocio = idSocio;
 	}
 
 	public String getDireccion() {

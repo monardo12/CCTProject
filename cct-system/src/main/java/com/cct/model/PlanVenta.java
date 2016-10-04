@@ -9,18 +9,19 @@ import java.util.List;
 @Table(name = "plan_venta")
 @NamedQuery(name = "PlanVenta.findAll", query = "SELECT p FROM PlanVenta p")
 public class PlanVenta implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idplanventa;
+	private Long idPlanVenta;
 
 	private String descripcion;
 
 	private String estado;
 
 	@Temporal(TemporalType.DATE)
-	private Date fechacreacion;
+	private Date fechaCreacion;
 
 	private String nombre;
 
@@ -57,12 +58,12 @@ public class PlanVenta implements Serializable {
 	public PlanVenta() {
 	}
 
-	public Long getIdplanventa() {
-		return this.idplanventa;
+	public Long getIdPlanVenta() {
+		return idPlanVenta;
 	}
 
-	public void setIdplanventa(Long idplanventa) {
-		this.idplanventa = idplanventa;
+	public void setIdPlanVenta(Long idPlanVenta) {
+		this.idPlanVenta = idPlanVenta;
 	}
 
 	public String getDescripcion() {
@@ -81,12 +82,12 @@ public class PlanVenta implements Serializable {
 		this.estado = estado;
 	}
 
-	public Date getFechacreacion() {
-		return this.fechacreacion;
+	public Date getFechaCreacion() {
+		return fechaCreacion;
 	}
 
-	public void setFechacreacion(Date fechacreacion) {
-		this.fechacreacion = fechacreacion;
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
 	}
 
 	public String getNombre() {

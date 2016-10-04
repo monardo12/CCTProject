@@ -18,11 +18,12 @@ import com.cct.constant.TipoReporte;
 @Entity
 @NamedQuery(name="Reporte.findAll", query="SELECT r FROM Reporte r")
 public class Reporte implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long idreporte;
+	private Long idReporte;
 
 	@Enumerated(EnumType.STRING)
 	private EstadoReporte estado;
@@ -40,12 +41,12 @@ public class Reporte implements Serializable {
 	public Reporte() {
 	}
 
-	public Long getIdreporte() {
-		return this.idreporte;
+	public Long getIdReporte() {
+		return idReporte;
 	}
 
-	public void setIdreporte(Long idreporte) {
-		this.idreporte = idreporte;
+	public void setIdReporte(Long idReporte) {
+		this.idReporte = idReporte;
 	}
 
 	public EstadoReporte getEstado() {

@@ -16,10 +16,10 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Cotizacion implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
-	@Id	
+	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long idCotizacion;
 
@@ -30,25 +30,24 @@ public class Cotizacion implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="idCliente")
 	private Cliente cliente;
-	
-    @JoinTable(name="item", joinColumns = {
-            @JoinColumn(name = "idcotizacion", referencedColumnName = "idcotizacion")}, inverseJoinColumns = {
-            @JoinColumn(name = "iditem", referencedColumnName = "iditem")})
+
+    @JoinTable(name="item", joinColumns = { @JoinColumn(name = "idcotizacion", referencedColumnName = "idcotizacion")},
+    						inverseJoinColumns = { @JoinColumn(name = "iditem", referencedColumnName = "iditem")})
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Collection<Item> items;
-	
+
 	private Date fechaCreacion;
 
 	private Integer cantidadItem;
-		
+
 	private String estado;
 
 	private Double valorItem;
-	
+
 	private Double total;
 
 	public Cotizacion() {
-		
+
 	}
 
 	public Cotizacion(Long idCotizacion, Servicio servicio, Cliente cliente,

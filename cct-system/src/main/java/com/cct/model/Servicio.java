@@ -11,11 +11,12 @@ import java.util.List;
 @Entity
 @NamedQuery(name = "Servicio.findAll", query = "SELECT s FROM Servicio s")
 public class Servicio implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idservicio;
+	private Long idServicio;
 
 	private String descripcion;
 
@@ -33,12 +34,12 @@ public class Servicio implements Serializable {
 	public Servicio() {
 	}
 
-	public Long getIdservicio() {
-		return this.idservicio;
+	public Long getIdServicio() {
+		return idServicio;
 	}
 
-	public void setIdservicio(Long idservicio) {
-		this.idservicio = idservicio;
+	public void setIdServicio(Long idServicio) {
+		this.idServicio = idServicio;
 	}
 
 	public String getDescripcion() {
