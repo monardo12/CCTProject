@@ -1,5 +1,7 @@
 package com.cct.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,4 +26,10 @@ public class PlanVentaController {
 		return new ResponseEntity<>(planVenta, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public ResponseEntity<List<PlanVenta>> getAllReportes(){
+		List<PlanVenta> planesVenta = planVentaService.obtenerPlanes();
+		return new ResponseEntity<>(planesVenta, HttpStatus.OK);
+	}
+	
 }

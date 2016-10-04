@@ -11,6 +11,8 @@ public class ReporteDTO {
 	private Date fechaInicial;
 
 	private Date fechaFinal;
+	
+	private Long idUsuario;
 
 	public TipoReporte getTipo() {
 		return tipo;
@@ -34,6 +36,14 @@ public class ReporteDTO {
 
 	public void setFechaFinal(Date fechaFinal) {
 		this.fechaFinal = fechaFinal;
+	}
+
+	public Long getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 }
