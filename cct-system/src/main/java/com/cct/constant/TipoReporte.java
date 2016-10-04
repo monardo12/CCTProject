@@ -2,7 +2,7 @@ package com.cct.constant;
 
 public enum TipoReporte {
 
-	PLANES_VENTA,
+	PLAN_VENTA,
 
 	FINANCIERO,
 
