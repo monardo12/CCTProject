@@ -6,6 +6,8 @@ import com.cct.constant.TipoReporte;
 
 public class ReporteDTO {
 
+	private Long id;
+	
 	private TipoReporte tipo;
 
 	private Date fechaInicial;
@@ -46,4 +48,19 @@ public class ReporteDTO {
 		this.idUsuario = idUsuario;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "ReporteDTO [id=" + id + ", tipo=" + tipo + ", fechaInicial="
+				+ fechaInicial + ", fechaFinal=" + fechaFinal + ", idUsuario="
+				+ idUsuario + "]";
+	}
+	
 }

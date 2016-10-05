@@ -58,7 +58,7 @@ CREATE TABLE reporte (
   id_usuario INTEGER NOT NULL,
   tipo VARCHAR NOT NULL,
   estado VARCHAR NOT NULL,
-  url VARCHAR NOT NULL,
+  url VARCHAR NULL,
   PRIMARY KEY(id_reporte),
   FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );

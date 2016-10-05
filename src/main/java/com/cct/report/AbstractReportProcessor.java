@@ -23,6 +23,7 @@ public abstract class AbstractReportProcessor<E> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractReportProcessor.class);
 	
 	public byte[] createReport(ReporteDTO reporteDTO){
+		LOGGER.debug("Iniciando generación de reporte");
 		byte[] output = null;
 		try {
 			Map<String, Object> map = new HashMap<>();
@@ -31,6 +32,7 @@ public abstract class AbstractReportProcessor<E> {
 	        JasperReport report = getFileReport();
 		    JasperPrint print = fillReport(map, report,dataReport);
 		    output = JasperExportManager.exportReportToPdf(print);
+		    LOGGER.debug("Generación de reporte finalizada");
 		} catch (JRException e) {
 			LOGGER.error(e.getMessage());	
 		} catch (Exception e) {
