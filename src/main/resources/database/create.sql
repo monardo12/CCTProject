@@ -79,13 +79,11 @@ CREATE TABLE cotizacion (
 
 CREATE TABLE item (
   id_item SERIAL,
-  id_cotizacion INTEGER NOT NULL,
   nombre VARCHAR NULL,
   estado VARCHAR NULL,
   descripcion VARCHAR NULL,
   precio FLOAT NULL,
-  PRIMARY KEY(id_item),
-  FOREIGN KEY(id_cotizacion) REFERENCES cotizacion(id_cotizacion)
+  PRIMARY KEY(id_item)
 );
 
 CREATE TABLE inventario (
@@ -135,4 +133,12 @@ CREATE TABLE plan_venta_has_propuesta (
   PRIMARY KEY(id_plan_venta, id_propuesta),
   FOREIGN KEY (id_plan_venta) REFERENCES plan_venta(id_plan_venta),
   FOREIGN KEY (id_propuesta) REFERENCES propuesta(id_propuesta)
+);
+
+CREATE TABLE cotizacion_has_item (
+  id_cotizacion INTEGER NOT NULL,
+  id_item INTEGER NOT NULL,
+  PRIMARY KEY(id_cotizacion, id_item),
+  FOREIGN KEY (id_cotizacion) REFERENCES cotizacion(id_cotizacion),
+  FOREIGN KEY (id_item) REFERENCES item(id_item)
 );

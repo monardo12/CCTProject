@@ -33,8 +33,9 @@ public class Cotizacion implements Serializable {
 	@JoinColumn(name="id_cliente")
 	private Cliente cliente;
 
-    @JoinTable(name="item", joinColumns = { @JoinColumn(name = "id_cotizacion", referencedColumnName = "id_cotizacion")},
-    						inverseJoinColumns = { @JoinColumn(name = "id_item", referencedColumnName = "id_item")})
+	@JoinTable(name="cotizacion_has_item", joinColumns = {
+        @JoinColumn(name = "id_cotizacion", referencedColumnName = "id_cotizacion")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_item", referencedColumnName = "id_item")})
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Collection<Item> items;
 

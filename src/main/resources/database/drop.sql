@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS plan_venta_item;
 DROP TABLE IF EXISTS plan_venta_inventario;
 DROP TABLE IF EXISTS servicio_plan_venta;
 DROP TABLE IF EXISTS servicio_item;
+DROP TABLE IF EXISTS cotizacion_has_item;
 DROP TABLE IF EXISTS plan_venta_has_propuesta;
 DROP TABLE IF EXISTS plan_venta_has_item;
 DROP TABLE IF EXISTS plan_venta_has_inventario;
