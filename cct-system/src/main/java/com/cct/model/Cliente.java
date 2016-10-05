@@ -15,11 +15,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @NamedQuery(name="Cliente.findAll", query="SELECT c FROM Cliente c")
 public class Cliente implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long idcliente;
+	private Long idCliente;
 
 	private String email;
 
@@ -34,12 +35,12 @@ public class Cliente implements Serializable {
 	public Cliente() {
 	}
 
-	public Long getIdcliente() {
-		return this.idcliente;
+	public Long getIdCliente() {
+		return this.idCliente;
 	}
 
-	public void setIdcliente(Long idcliente) {
-		this.idcliente = idcliente;
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente;
 	}
 
 	public String getEmail() {

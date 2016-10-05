@@ -9,60 +9,61 @@ import java.util.List;
 @Table(name = "plan_venta")
 @NamedQuery(name = "PlanVenta.findAll", query = "SELECT p FROM PlanVenta p")
 public class PlanVenta implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idplanventa;
+	private Long idPlanVenta;
 
 	private String descripcion;
 
 	private String estado;
 
 	@Temporal(TemporalType.DATE)
-	private Date fechacreacion;
+	private Date fechaCreacion;
 
 	private String nombre;
 
 	// bi-directional many-to-one association to Cliente
 	@ManyToOne
-	@JoinColumn(name = "idcliente")
+	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 
 	// bi-directional many-to-many association to Inventario
 	@ManyToMany
-	@JoinTable(name = "plan_venta_has_inventario", joinColumns = { @JoinColumn(name = "idplanventa") }, inverseJoinColumns = { @JoinColumn(name = "idinventario") })
+	@JoinTable(name = "plan_venta_has_inventario", joinColumns = { @JoinColumn(name = "id_plan_venta") }, inverseJoinColumns = { @JoinColumn(name = "id_inventario") })
 	private List<Inventario> inventarios;
 
 	// bi-directional many-to-many association to Item
 	@ManyToMany
-	@JoinTable(name = "plan_venta_has_item", joinColumns = { @JoinColumn(name = "idplanventa") }, inverseJoinColumns = { @JoinColumn(name = "iditem") })
+	@JoinTable(name = "plan_venta_has_item", joinColumns = { @JoinColumn(name = "id_plan_venta") }, inverseJoinColumns = { @JoinColumn(name = "id_item") })
 	private List<Item> items;
 
 	// bi-directional many-to-one association to Usuario
 	@ManyToOne
-	@JoinColumn(name = "idusuario")
+	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 
 	// bi-directional many-to-many association to Propuesta
 	@ManyToMany
-	@JoinTable(name = "plan_venta_has_propuesta", joinColumns = { @JoinColumn(name = "idplanventa") }, inverseJoinColumns = { @JoinColumn(name = "idpropuesta") })
+	@JoinTable(name = "plan_venta_has_propuesta", joinColumns = { @JoinColumn(name = "id_plan_venta") }, inverseJoinColumns = { @JoinColumn(name = "id_propuesta") })
 	private List<Propuesta> propuestas;
 
 	// bi-directional many-to-many association to Servicio
 	@ManyToMany
-	@JoinTable(name = "plan_venta_has_servicio", joinColumns = { @JoinColumn(name = "idplanventa") }, inverseJoinColumns = { @JoinColumn(name = "idservicio") })
+	@JoinTable(name = "plan_venta_has_servicio", joinColumns = { @JoinColumn(name = "id_plan_venta") }, inverseJoinColumns = { @JoinColumn(name = "id_servicio") })
 	private List<Servicio> servicios;
 
 	public PlanVenta() {
 	}
 
-	public Long getIdplanventa() {
-		return this.idplanventa;
+	public Long getIdPlanVenta() {
+		return idPlanVenta;
 	}
 
-	public void setIdplanventa(Long idplanventa) {
-		this.idplanventa = idplanventa;
+	public void setIdPlanVenta(Long idPlanVenta) {
+		this.idPlanVenta = idPlanVenta;
 	}
 
 	public String getDescripcion() {
@@ -81,12 +82,12 @@ public class PlanVenta implements Serializable {
 		this.estado = estado;
 	}
 
-	public Date getFechacreacion() {
-		return this.fechacreacion;
+	public Date getFechaCreacion() {
+		return fechaCreacion;
 	}
 
-	public void setFechacreacion(Date fechacreacion) {
-		this.fechacreacion = fechacreacion;
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
 	}
 
 	public String getNombre() {

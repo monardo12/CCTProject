@@ -3,6 +3,7 @@ package com.cct.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,11 +17,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @NamedQuery(name="Item.findAll", query="SELECT i FROM Item i")
 public class Item implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long iditem;
+	@Column(name = "id_item")
+	private Long idItem;
 
 	private String descripcion;
 
@@ -41,14 +44,15 @@ public class Item implements Serializable {
 	private List<Servicio> servicios;
 
 	public Item() {
+
 	}
 
-	public Long getIditem() {
-		return this.iditem;
+	public Long getIdItem() {
+		return idItem;
 	}
 
-	public void setIditem(Long iditem) {
-		this.iditem = iditem;
+	public void setIdItem(Long idItem) {
+		this.idItem = idItem;
 	}
 
 	public String getDescripcion() {

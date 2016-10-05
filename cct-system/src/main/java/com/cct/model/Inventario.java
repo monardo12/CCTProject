@@ -24,16 +24,16 @@ public class Inventario implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long idinventario;
+	private Long idInventario;
 
 	private String estado;
 
 	@Temporal(TemporalType.DATE)
-	private Date fechacompra;
+	private Date fechaCompra;
 
 	//bi-directional many-to-one association to Item
 	@ManyToOne
-	@JoinColumn(name="iditem")
+	@JoinColumn(name="id_item")
 	private Item item;
 
 	//bi-directional many-to-many association to PlanVenta
@@ -44,12 +44,12 @@ public class Inventario implements Serializable {
 	public Inventario() {
 	}
 
-	public Long getIdinventario() {
-		return this.idinventario;
+	public Long getIdInventario() {
+		return idInventario;
 	}
 
-	public void setIdinventario(Long idinventario) {
-		this.idinventario = idinventario;
+	public void setIdInventario(Long idInventario) {
+		this.idInventario = idInventario;
 	}
 
 	public String getEstado() {
@@ -60,12 +60,12 @@ public class Inventario implements Serializable {
 		this.estado = estado;
 	}
 
-	public Date getFechacompra() {
-		return this.fechacompra;
+	public Date getFechaCompra() {
+		return fechaCompra;
 	}
 
-	public void setFechacompra(Date fechacompra) {
-		this.fechacompra = fechacompra;
+	public void setFechaCompra(Date fechaCompra) {
+		this.fechaCompra = fechaCompra;
 	}
 
 	public Item getItem() {

@@ -12,21 +12,22 @@ import java.util.List;
 @Entity
 @NamedQuery(name = "Propuesta.findAll", query = "SELECT p FROM Propuesta p")
 public class Propuesta implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long idpropuesta;
+	private Long idPropuesta;
 
 	private double costo;
 
 	private String descripcion;
 
 	@Temporal(TemporalType.DATE)
-	private Date fechafin;
+	private Date fechaFin;
 
 	@Temporal(TemporalType.DATE)
-	private Date fechainicio;
+	private Date fechaInicio;
 
 	// bi-directional many-to-many association to PlanVenta
 	@ManyToMany(mappedBy = "propuestas")
@@ -34,18 +35,18 @@ public class Propuesta implements Serializable {
 
 	// bi-directional many-to-one association to Socio
 	@ManyToOne
-	@JoinColumn(name = "idsocio")
+	@JoinColumn(name = "id_socio")
 	private Socio socio;
 
 	public Propuesta() {
 	}
 
-	public Long getIdpropuesta() {
-		return this.idpropuesta;
+	public Long getIdPropuesta() {
+		return idPropuesta;
 	}
 
-	public void setIdpropuesta(Long idpropuesta) {
-		this.idpropuesta = idpropuesta;
+	public void setIdPropuesta(Long idPropuesta) {
+		this.idPropuesta = idPropuesta;
 	}
 
 	public double getCosto() {
@@ -64,20 +65,20 @@ public class Propuesta implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public Date getFechafin() {
-		return this.fechafin;
+	public Date getFechaFin() {
+		return fechaFin;
 	}
 
-	public void setFechafin(Date fechafin) {
-		this.fechafin = fechafin;
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
 	}
 
-	public Date getFechainicio() {
-		return this.fechainicio;
+	public Date getFechaInicio() {
+		return fechaInicio;
 	}
 
-	public void setFechainicio(Date fechainicio) {
-		this.fechainicio = fechainicio;
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
 	}
 
 	@JsonIgnore

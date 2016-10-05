@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,39 +17,39 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Cotizacion implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
-	@Id	
+	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "id_cotizacion")
 	private Long idCotizacion;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="idServicio")
+	@JoinColumn(name="id_servicio")
 	private Servicio servicio;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="idCliente")
+	@JoinColumn(name="id_cliente")
 	private Cliente cliente;
-	
-    @JoinTable(name="item", joinColumns = {
-            @JoinColumn(name = "idcotizacion", referencedColumnName = "idcotizacion")}, inverseJoinColumns = {
-            @JoinColumn(name = "iditem", referencedColumnName = "iditem")})
+
+    @JoinTable(name="item", joinColumns = { @JoinColumn(name = "id_cotizacion", referencedColumnName = "id_cotizacion")},
+    						inverseJoinColumns = { @JoinColumn(name = "id_item", referencedColumnName = "id_item")})
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Collection<Item> items;
-	
+
 	private Date fechaCreacion;
 
 	private Integer cantidadItem;
-		
+
 	private String estado;
 
 	private Double valorItem;
-	
+
 	private Double total;
 
 	public Cotizacion() {
-		
+
 	}
 
 	public Cotizacion(Long idCotizacion, Servicio servicio, Cliente cliente,

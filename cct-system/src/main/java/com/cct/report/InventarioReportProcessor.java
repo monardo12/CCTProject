@@ -35,9 +35,9 @@ public class InventarioReportProcessor extends AbstractReportProcessor<Inventari
     	Object[][] data = new Object [listData.size()][4];
      
         for (Inventario inventario : listData) {
-      	    data[i][0] = inventario.getIdinventario();
+      	    data[i][0] = inventario.getIdInventario();
      	    data[i][1] = inventario.getItem().getDescripcion();
-     	    data[i][2] = inventario.getFechacompra().toString();
+     	    data[i][2] = inventario.getFechaCompra().toString();
      	    data[i][3] = inventario.getEstado();
         	i++;
 		}
@@ -45,7 +45,7 @@ public class InventarioReportProcessor extends AbstractReportProcessor<Inventari
 	}
 	
 	List<Inventario> getInfo(ReporteDTO datosConsulta) {
-		return inventarioRepository.findAllInventarioByFechacompraGreaterThanEqualAndFechacompraLessThanEqual(datosConsulta.getFechaInicial(), datosConsulta.getFechaFinal());
+		return inventarioRepository.findAllInventarioByFechaCompraGreaterThanEqualAndFechaCompraLessThanEqual(datosConsulta.getFechaInicial(), datosConsulta.getFechaFinal());
 	}
 
 
