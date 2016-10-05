@@ -50,6 +50,12 @@ public class HelloWorldController {
 		return clienteRepository.findOne(1L);
 	}
 
+	@RequestMapping("/loaderio-0d6da71e28d78fae023635643fd2e089")
+	@ResponseBody
+	public String loaderIO() {
+		return "loaderio-0d6da71e28d78fae023635643fd2e089";
+	}
+
 	@RequestMapping(value = "/message", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> sendMessage(@RequestBody Email email){
