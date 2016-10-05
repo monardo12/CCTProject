@@ -1,16 +1,10 @@
 package com.cct.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cct.dto.Email;
 import com.cct.model.Cliente;
 import com.cct.redis.RedisClient;
 import com.cct.repo.ClienteRepository;
@@ -20,9 +14,6 @@ public class HelloWorldController {
 
 	@Autowired
 	private RedisClient redisClient;
-
-	@Autowired
-	private JmsTemplate jmsTemplate;
 
 	@RequestMapping("/")
 	@ResponseBody
@@ -54,13 +45,6 @@ public class HelloWorldController {
 	@ResponseBody
 	public String loaderIO() {
 		return "loaderio-0d6da71e28d78fae023635643fd2e089";
-	}
-
-	@RequestMapping(value = "/message", method = RequestMethod.POST)
-	@ResponseBody
-	public ResponseEntity<String> sendMessage(@RequestBody Email email){
-		jmsTemplate.convertAndSend("mailbox", email);
-		return new ResponseEntity<>("Message Received!", HttpStatus.OK);
 	}
 
 }
