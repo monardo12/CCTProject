@@ -22,7 +22,7 @@ public class ServicioServiceImpl implements ServicioService {
 
 	@Override
 	public Servicio obtenerServicio(Long idServicio) {
-		return servicioRepository.findByidservicio(idServicio);
+		return servicioRepository.findByIdServicio(idServicio);
 	}
 
 	@Override

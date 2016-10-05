@@ -24,7 +24,7 @@ public class Servicio implements Serializable {
 
 	// bi-directional many-to-many association to Item
 	@ManyToMany
-	@JoinTable(name = "servicio_has_item", joinColumns = { @JoinColumn(name = "idservicio") }, inverseJoinColumns = { @JoinColumn(name = "iditem") })
+	@JoinTable(name = "servicio_has_item", joinColumns = { @JoinColumn(name = "id_servicio") }, inverseJoinColumns = { @JoinColumn(name = "id_item") })
 	private List<Item> items;
 
 	// bi-directional many-to-many association to PlanVenta

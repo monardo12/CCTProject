@@ -33,7 +33,7 @@ public class Inventario implements Serializable {
 
 	//bi-directional many-to-one association to Item
 	@ManyToOne
-	@JoinColumn(name="iditem")
+	@JoinColumn(name="id_item")
 	private Item item;
 
 	//bi-directional many-to-many association to PlanVenta

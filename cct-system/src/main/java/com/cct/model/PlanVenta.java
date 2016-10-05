@@ -27,32 +27,32 @@ public class PlanVenta implements Serializable {
 
 	// bi-directional many-to-one association to Cliente
 	@ManyToOne
-	@JoinColumn(name = "idcliente")
+	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 
 	// bi-directional many-to-many association to Inventario
 	@ManyToMany
-	@JoinTable(name = "plan_venta_has_inventario", joinColumns = { @JoinColumn(name = "idplanventa") }, inverseJoinColumns = { @JoinColumn(name = "idinventario") })
+	@JoinTable(name = "plan_venta_has_inventario", joinColumns = { @JoinColumn(name = "id_plan_venta") }, inverseJoinColumns = { @JoinColumn(name = "id_inventario") })
 	private List<Inventario> inventarios;
 
 	// bi-directional many-to-many association to Item
 	@ManyToMany
-	@JoinTable(name = "plan_venta_has_item", joinColumns = { @JoinColumn(name = "idplanventa") }, inverseJoinColumns = { @JoinColumn(name = "iditem") })
+	@JoinTable(name = "plan_venta_has_item", joinColumns = { @JoinColumn(name = "id_plan_venta") }, inverseJoinColumns = { @JoinColumn(name = "id_item") })
 	private List<Item> items;
 
 	// bi-directional many-to-one association to Usuario
 	@ManyToOne
-	@JoinColumn(name = "idusuario")
+	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 
 	// bi-directional many-to-many association to Propuesta
 	@ManyToMany
-	@JoinTable(name = "plan_venta_has_propuesta", joinColumns = { @JoinColumn(name = "idplanventa") }, inverseJoinColumns = { @JoinColumn(name = "idpropuesta") })
+	@JoinTable(name = "plan_venta_has_propuesta", joinColumns = { @JoinColumn(name = "id_plan_venta") }, inverseJoinColumns = { @JoinColumn(name = "id_propuesta") })
 	private List<Propuesta> propuestas;
 
 	// bi-directional many-to-many association to Servicio
 	@ManyToMany
-	@JoinTable(name = "plan_venta_has_servicio", joinColumns = { @JoinColumn(name = "idplanventa") }, inverseJoinColumns = { @JoinColumn(name = "idservicio") })
+	@JoinTable(name = "plan_venta_has_servicio", joinColumns = { @JoinColumn(name = "id_plan_venta") }, inverseJoinColumns = { @JoinColumn(name = "id_servicio") })
 	private List<Servicio> servicios;
 
 	public PlanVenta() {

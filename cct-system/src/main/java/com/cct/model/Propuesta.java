@@ -35,7 +35,7 @@ public class Propuesta implements Serializable {
 
 	// bi-directional many-to-one association to Socio
 	@ManyToOne
-	@JoinColumn(name = "idsocio")
+	@JoinColumn(name = "id_socio")
 	private Socio socio;
 
 	public Propuesta() {

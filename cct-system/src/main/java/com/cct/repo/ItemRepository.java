@@ -6,6 +6,6 @@ import com.cct.model.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Long>{
 
-	Item findByiditem(Long iditem);
+	Item findByIdItem(Long idItem);
 
 }

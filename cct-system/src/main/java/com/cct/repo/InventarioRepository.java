@@ -9,6 +9,6 @@ import com.cct.model.Inventario;
 
 public interface InventarioRepository extends JpaRepository<Inventario, Long>{
 
-	public List<Inventario> findAllInventarioByFechacompraGreaterThanEqualAndFechacompraLessThanEqual(Date fechaInicial, Date fechaFinal);
+	public List<Inventario> findAllInventarioByFechaCompraGreaterThanEqualAndFechaCompraLessThanEqual(Date fechaInicial, Date fechaFinal);
 
 }

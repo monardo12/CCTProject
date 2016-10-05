@@ -45,7 +45,7 @@ public class InventarioReportProcessor extends AbstractReportProcessor<Inventari
 	}
 	
 	List<Inventario> getInfo(ReporteDTO datosConsulta) {
-		return inventarioRepository.findAllInventarioByFechacompraGreaterThanEqualAndFechacompraLessThanEqual(datosConsulta.getFechaInicial(), datosConsulta.getFechaFinal());
+		return inventarioRepository.findAllInventarioByFechaCompraGreaterThanEqualAndFechaCompraLessThanEqual(datosConsulta.getFechaInicial(), datosConsulta.getFechaFinal());
 	}
 
 

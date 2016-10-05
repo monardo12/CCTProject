@@ -6,6 +6,6 @@ import com.cct.model.Servicio;
 
 public interface ServicioRepository extends JpaRepository<Servicio, Long>{
 
-	Servicio findByidservicio(Long idServicio);
+	Servicio findByIdServicio(Long idServicio);
 
 }
