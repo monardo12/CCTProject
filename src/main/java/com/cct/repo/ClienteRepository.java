@@ -6,8 +6,4 @@ import com.cct.model.Cliente;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 
-	Cliente findByNombre(String nombre);
-
-	Cliente findByIdCliente(Long idCliente);
-
 }

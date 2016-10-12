@@ -10,7 +10,7 @@ public interface ClienteService {
 	
 	Cliente obtenerCliente(Long idCliente);
 	
-	Collection<Cliente> obtenerClientees();
+	Collection<Cliente> obtenerClientes();
 	
 	Cliente actualizarCliente(Cliente cliente);
 	

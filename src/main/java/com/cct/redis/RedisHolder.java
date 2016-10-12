@@ -1,9 +1,8 @@
-package com.cct.holder;
+package com.cct.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.cct.redis.RedisClient;
 import com.cct.util.ObjectSerializer;
 
 @Component
