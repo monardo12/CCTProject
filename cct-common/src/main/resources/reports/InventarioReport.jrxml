@@ -5,10 +5,10 @@
 	<property name="ireport.zoom" value="1.1"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<style name="Title" forecolor="#FFFFFF" fontName="Garuda" fontSize="26" isBold="true" pdfFontName="Garuda"/>
-	<style name="SubTitle" forecolor="#666666" fontName="Garuda" fontSize="18"/>
-	<style name="Column header" forecolor="#666666" fontName="Garuda" fontSize="12" isBold="true"/>
-	<style name="Detail" fontName="Garuda" fontSize="12"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
 	<field name="COLUMN_0" class="java.lang.Long"/>
 	<field name="COLUMN_1" class="java.lang.String"/>
 	<field name="COLUMN_2" class="java.lang.String"/>
