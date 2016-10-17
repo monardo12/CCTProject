@@ -26,11 +26,6 @@
 			<artifactId>cct-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.cct</groupId>
-			<artifactId>cct-web</artifactId>
-			<version>${project.version}</version>
-		</dependency>
 	</dependencies>
 	
 	<build>

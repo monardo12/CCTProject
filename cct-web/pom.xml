@@ -18,6 +18,7 @@
 		<java.version>1.7</java.version>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
+		<main-class>com.cct.CctSystemApplication</main-class>
 	</properties>
 
 	<dependencies>
@@ -31,12 +32,19 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>${main-class}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<mainClass>com.cct.CctSystemApplication</mainClass>
-					<layout>ZIP</layout>
-				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -44,35 +52,38 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<mainClass>${main-class}</mainClass>
+				</configuration>
 			</plugin>
 
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>unpack-zip</id>
-						<phase>prepare-package</phase>
-						<goals>
-							<goal>unpack-dependencies</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>com.newrelic.agent.java</groupId>
-									<artifactId>newrelic-java</artifactId>
-									<version>3.2.0</version>
-									<type>zip</type>
-									<overWrite>true</overWrite>
-									<outputDirectory>target</outputDirectory>
-									<destFileName>newrelic</destFileName>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>./</outputDirectory>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-dependency-plugin</artifactId>
+	<executions>
+		<execution>
+			<id>unpack-zip</id>
+			<phase>prepare-package</phase>
+			<goals>
+				<goal>unpack-dependencies</goal>
+			</goals>
+			<configuration>
+				<artifactItems>
+					<artifactItem>
+						<groupId>com.newrelic.agent.java</groupId>
+						<artifactId>newrelic-java</artifactId>
+						<version>3.2.0</version>
+						<type>zip</type>
+						<overWrite>true</overWrite>
+						<outputDirectory>target</outputDirectory>
+						<destFileName>newrelic</destFileName>
+					</artifactItem>
+				</artifactItems>
+				<outputDirectory>./</outputDirectory>
+			</configuration>
+		</execution>
+	</executions>
+</plugin>
 		</plugins>
 	</build>
 

@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.util.ErrorHandler;
 
-import com.cct.CctSystemApplication;
+import com.cct.config.ApplicationConfig;
 import com.cct.config.RabbitConfig;
 import com.cct.constant.EstadoReporte;
 import com.cct.dto.ReporteDTO;
@@ -27,7 +27,7 @@ public class ReportWorker {
         final Queue rabbitQueue = rabbitConfig.getBean(Queue.class);
         final MessageConverter messageConverter = new SimpleMessageConverter();
         
-        final ApplicationContext applicationConfig = new AnnotationConfigApplicationContext(CctSystemApplication.class);
+        final ApplicationContext applicationConfig = new AnnotationConfigApplicationContext(ApplicationConfig.class);
         final ReporteService reporteService = applicationConfig.getBean(ReporteService.class);
         final ReportProcessorFactory reportProcessorFactory = applicationConfig.getBean(ReportProcessorFactory.class);
         
