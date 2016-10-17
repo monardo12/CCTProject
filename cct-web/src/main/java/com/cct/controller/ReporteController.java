@@ -20,6 +20,8 @@ import com.cct.constant.EstadoReporte;
 import com.cct.dto.ReporteDTO;
 import com.cct.model.Reporte;
 import com.cct.model.Usuario;
+import com.cct.report.AbstractReportProcessor;
+import com.cct.report.ReportProcessorFactory;
 import com.cct.services.ReporteService;
 
 @Controller
@@ -28,6 +30,9 @@ public class ReporteController {
 
 	@Autowired
 	private ReporteService reporteService;
+	
+	@Autowired
+	private ReportProcessorFactory reportProcessorFactory;
 	
 	@Autowired
 	private JmsTemplate jmsTemplate;
@@ -62,6 +67,13 @@ public class ReporteController {
 		System.out.println("Sent: <" + reporteDTO + ">");
 		
 		return new ResponseEntity<>(newReporte, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/direct", method = RequestMethod.POST)
+	public ResponseEntity<byte[]> createReport(@RequestBody ReporteDTO reporteDTO){
+		AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
+		byte[] report = reportProcessor.createReport(reporteDTO);
+		return new ResponseEntity<>(report, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/{idReporte}", method = RequestMethod.GET)
