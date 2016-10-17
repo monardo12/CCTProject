@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +29,9 @@ public class ReporteController {
 	@Autowired
 	private ReporteService reporteService;
 	
+	@Autowired
+	private JmsTemplate jmsTemplate;
+	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Reporte> createAsyncReport(@RequestBody ReporteDTO reporteDTO){
 		Reporte reporte = buildReporte(reporteDTO);
@@ -40,7 +44,22 @@ public class ReporteController {
         AmqpTemplate amqpTemplate = context.getBean(AmqpTemplate.class);
         amqpTemplate.convertAndSend(reporteDTO);
 
-        System.out.println("Sent to RabbitMQ: " + reporteDTO);
+        System.out.println("Sent to RabbitMQ: <" + reporteDTO + ">");
+		
+		return new ResponseEntity<>(newReporte, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/jms", method = RequestMethod.POST)
+	public ResponseEntity<Reporte> createJmsAsyncReport(@RequestBody ReporteDTO reporteDTO){
+		Reporte reporte = buildReporte(reporteDTO);
+		reporte.setEstado(EstadoReporte.EN_PROCESO);
+		Reporte newReporte = reporteService.crearReporte(reporte);
+		reporteDTO.setId(newReporte.getIdReporte());
+
+		//Sending message
+		jmsTemplate.convertAndSend("report", reporteDTO);
+		
+		System.out.println("Sent: <" + reporteDTO + ">");
 		
 		return new ResponseEntity<>(newReporte, HttpStatus.OK);
 	}
