@@ -1,10 +1,13 @@
 package com.cct.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.cct.constant.TipoReporte;
 
-public class ReporteDTO {
+public class ReporteDTO implements Serializable{
+
+	private static final long serialVersionUID = -9209612670984890931L;
 
 	private Long id;
 	

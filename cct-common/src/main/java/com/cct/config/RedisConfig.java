@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 public class RedisConfig {
 
 	@Bean
-	RedisConnectionFactory connectionFactory() {
+	RedisConnectionFactory redisConnectionFactory() {
 		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
 		jedisConnectionFactory.setUsePool(true);
 		jedisConnectionFactory.setHostName(System.getenv("REDIS_HOSTNAME"));
@@ -24,7 +24,7 @@ public class RedisConfig {
 	@Bean
     RedisTemplate<Object, Object> redisTemplate() {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<Object, Object>();
-        redisTemplate.setConnectionFactory(connectionFactory());
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
         return redisTemplate;
     }
 
