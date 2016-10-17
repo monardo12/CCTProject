@@ -4,17 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.cct</groupId>
-	<artifactId>cct-system</artifactId>
+	<artifactId>cct-common</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
-	<name>cct-system</name>
-	<description></description>
-
-	<modules>
-		<module>cct-common</module>
-		<module>cct-web</module>
-		<module>cct-worker</module>
-	</modules>
-
+	<parent>
+		<groupId>com.cct</groupId>
+		<artifactId>cct-system</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	
 </project>
