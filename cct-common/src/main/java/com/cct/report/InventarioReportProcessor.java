@@ -1,5 +1,6 @@
 package com.cct.report;
 
+import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class InventarioReportProcessor extends AbstractReportProcessor<Inventari
 
 	@Override
 	JasperReport getFileReport() throws JRException {
-		InputStream in = this.getClass().getClassLoader().getResourceAsStream("com/cct/report/InventarioReport.jrxml");
+		InputStream in = this.getClass().getClassLoader().getResourceAsStream(buildReportUrl());
 		return JasperCompileManager.compileReport(in);
 	}
 
@@ -48,5 +49,15 @@ public class InventarioReportProcessor extends AbstractReportProcessor<Inventari
 		return inventarioRepository.findAllInventarioByFechaCompraGreaterThanEqualAndFechaCompraLessThanEqual(datosConsulta.getFechaInicial(), datosConsulta.getFechaFinal());
 	}
 
-
+	private String buildReportUrl(){
+		return new StringBuilder()
+			.append("com")
+			.append(File.separator)
+			.append("cct")
+			.append(File.separator)
+			.append("report")
+			.append(File.separator)
+			.append("InventarioReport.jrxml")
+			.toString();
+	}
 }
