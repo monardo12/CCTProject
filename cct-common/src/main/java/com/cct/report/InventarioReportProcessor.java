@@ -50,14 +50,12 @@ public class InventarioReportProcessor extends AbstractReportProcessor<Inventari
 	}
 
 	private String buildReportUrl(){
-		return new StringBuilder()
-			.append("com")
-			.append(File.separator)
-			.append("cct")
-			.append(File.separator)
-			.append("report")
+		String reportUrl = new StringBuilder()
+			.append("reports")
 			.append(File.separator)
 			.append("InventarioReport.jrxml")
 			.toString();
+		System.out.println("Finding: " + reportUrl);
+		return reportUrl;
 	}
 }
