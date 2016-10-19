@@ -3,6 +3,7 @@ package com.cct.controller;
 import java.util.List;
 
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -37,6 +38,9 @@ public class ReporteController {
 	@Autowired
 	private JmsTemplate jmsTemplate;
 	
+	@Autowired 
+    	private RabbitTemplate amqpTemplate;
+	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Reporte> createAsyncReport(@RequestBody ReporteDTO reporteDTO){
 		Reporte reporte = buildReporte(reporteDTO);
@@ -44,12 +48,10 @@ public class ReporteController {
 		Reporte newReporte = reporteService.crearReporte(reporte);
 		reporteDTO.setId(newReporte.getIdReporte());
 		
-		//Sending to queue
-		ApplicationContext context = new AnnotationConfigApplicationContext(RabbitConfig.class);
-        AmqpTemplate amqpTemplate = context.getBean(AmqpTemplate.class);
-        amqpTemplate.convertAndSend(reporteDTO);
+		//Sending to queue		     
+        	amqpTemplate.convertAndSend(reporteDTO);
 
-        System.out.println("Sent to RabbitMQ: <" + reporteDTO + ">");
+        	System.out.println("Sent to RabbitMQ: <" + reporteDTO + ">");
 		
 		return new ResponseEntity<>(newReporte, HttpStatus.OK);
 	}
