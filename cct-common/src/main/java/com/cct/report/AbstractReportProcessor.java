@@ -34,9 +34,11 @@ public abstract class AbstractReportProcessor<E> {
 		    output = JasperExportManager.exportReportToPdf(print);
 		    LOGGER.debug("Generación de reporte finalizada");
 		} catch (JRException e) {
-			LOGGER.error(e);	
+			Logger logger = Logger.getAnonymousLogger();
+			logger.log(Level.SEVERE, e.getMessage(), e);
 		} catch (Exception e) {
-			LOGGER.error(e);	
+			Logger logger = Logger.getAnonymousLogger();
+			logger.log(Level.SEVERE, e.getMessage(), e);
 		}	
 		return output;
 	}
