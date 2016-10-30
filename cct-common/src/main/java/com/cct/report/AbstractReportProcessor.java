@@ -36,10 +36,10 @@ public abstract class AbstractReportProcessor<E> {
 		    output = JasperExportManager.exportReportToPdf(print);
 		    LOGGER.debug("Generación de reporte finalizada");
 		} catch (JRException e) {
-			java.util.logging.Logger logger = Logger.getAnonymousLogger();
+			java.util.logging.Logger logger = java.util.logging.Logger.getAnonymousLogger();
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		} catch (Exception e) {
-			java.util.logging.Logger logger = Logger.getAnonymousLogger();
+			java.util.logging.Logger logger = java.util.logging.Logger.getAnonymousLogger();
 			logger.log(Level.SEVERE, e.getMessage(), e);
 		}	
 		return output;
