@@ -19,7 +19,14 @@ import com.cct.model.Reporte;
 import com.cct.model.Usuario;
 import com.cct.services.ReporteService;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class ReportWorker {
+	
+	private ReportWorker() {
+		// No requiere inicialización
+	}
 
 	public static void main(String[] args) {
         final ApplicationContext rabbitConfig = new AnnotationConfigApplicationContext(RabbitConfig.class);
@@ -41,7 +48,9 @@ public class ReportWorker {
         listenerContainer.setMessageListener(new MessageListener() {
             public void onMessage(Message message) {
                 final ReporteDTO reporteDTO = (ReporteDTO) messageConverter.fromMessage(message);
-                System.out.println("Received <" + reporteDTO + ">");
+                Logger logger = Logger.getAnonymousLogger();
+				logger.log(Level.SEVERE, "Received <" + reporteDTO + ">");
+				
                 AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
         		reportProcessor.createReport(reporteDTO);
         		Reporte reporte = buildReporte(reporteDTO);
@@ -53,7 +62,8 @@ public class ReportWorker {
         // set a simple error handler
         listenerContainer.setErrorHandler(new ErrorHandler() {
             public void handleError(Throwable t) {
-                t.printStackTrace();
+                Logger logger = Logger.getAnonymousLogger();
+				logger.log(Level.SEVERE, "An exception was thrown", t);
             }
         });
 
@@ -61,14 +71,17 @@ public class ReportWorker {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-                System.out.println("Shutting down ReportWorker");
+				Logger logger = Logger.getAnonymousLogger();
+				logger.log(Level.SEVERE, "Shutting down ReportWorker");
                 listenerContainer.shutdown();
             }
         });
 
         // start up the listener. this will block until JVM is killed.
         listenerContainer.start();
-        System.out.println("ReportWorker started");
+		
+		Logger logger = Logger.getAnonymousLogger();
+		logger.log(Level.SEVERE, "ReportWorker started");
     }
 	
 	private static Reporte buildReporte(ReporteDTO reporteDTO){

@@ -21,7 +21,10 @@ public class AsyncReportProcessor {
 	
 	@JmsListener(destination = "report", containerFactory = "myFactory")
     public void receiveMessage(ReporteDTO reporteDTO) {
-        System.out.println("Received <" + reporteDTO + ">");
+		
+		Logger logger = Logger.getAnonymousLogger();
+		logger.log(Level.SEVERE, "Received <" + reporteDTO + ">");
+		
         AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
 		reportProcessor.createReport(reporteDTO);
 		Reporte reporte = buildReporte(reporteDTO);

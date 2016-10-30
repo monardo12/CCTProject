@@ -15,12 +15,10 @@ public class ReportProcessorFactory {
 	private ApplicationContext applicationContext;
 	
 	public AbstractReportProcessor<?> getReportProcessor(TipoReporte tipoReporte){
-		switch(tipoReporte){
-			case INVENTARIO:
-				return applicationContext.getBean(InventarioReportProcessor.class);
-			default:
-				return null;
-		}
+		if (tipoReporte == INVENTARIO)
+			return applicationContext.getBean(InventarioReportProcessor.class);
+		
+		return null;
 	}
 	
 }

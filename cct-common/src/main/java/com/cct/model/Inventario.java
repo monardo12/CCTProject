@@ -42,6 +42,7 @@ public class Inventario implements Serializable {
 	private List<PlanVenta> planVentas;
 
 	public Inventario() {
+		// No require inicialización
 	}
 
 	public Long getIdInventario() {

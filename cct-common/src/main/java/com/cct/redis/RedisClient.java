@@ -49,7 +49,7 @@ public class RedisClient {
 		if(id == null) {
 			throw new IllegalArgumentException("NULL id sent");
 		}
-		return (redisTemplate.opsForValue().get(id) != null);
+		return redisTemplate.opsForValue().get(id) != null;
 	}
 
 

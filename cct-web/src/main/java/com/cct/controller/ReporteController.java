@@ -2,11 +2,8 @@ package com.cct.controller;
 
 import java.util.List;
 
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.cct.config.RabbitConfig;
 import com.cct.constant.EstadoReporte;
 import com.cct.dto.ReporteDTO;
 import com.cct.model.Reporte;
@@ -49,9 +45,10 @@ public class ReporteController {
 		reporteDTO.setId(newReporte.getIdReporte());
 		
 		//Sending to queue		     
-        	amqpTemplate.convertAndSend(reporteDTO);
+        amqpTemplate.convertAndSend(reporteDTO);
 
-        	System.out.println("Sent to RabbitMQ: <" + reporteDTO + ">");
+        Logger logger = Logger.getAnonymousLogger();
+        logger.log(Level.SEVERE, "Sent to RabbitMQ: <" + reporteDTO + ">");
 		
 		return new ResponseEntity<>(newReporte, HttpStatus.OK);
 	}
@@ -66,7 +63,8 @@ public class ReporteController {
 		//Sending message
 		jmsTemplate.convertAndSend("report", reporteDTO);
 		
-		System.out.println("Sent: <" + reporteDTO + ">");
+		Logger logger = Logger.getAnonymousLogger();
+        logger.log(Level.SEVERE, "Sent: <" + reporteDTO + ">");
 		
 		return new ResponseEntity<>(newReporte, HttpStatus.OK);
 	}

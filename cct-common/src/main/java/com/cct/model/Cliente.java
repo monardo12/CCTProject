@@ -33,6 +33,7 @@ public class Cliente implements Serializable {
 	private List<PlanVenta> planVentas;
 
 	public Cliente() {
+		// No require inicialización
 	}
 
 	public Long getIdCliente() {

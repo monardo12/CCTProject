@@ -32,6 +32,7 @@ public class Servicio implements Serializable {
 	private List<PlanVenta> planVentas;
 
 	public Servicio() {
+		// No require inicialización
 	}
 
 	public Long getIdServicio() {
