@@ -10,6 +10,9 @@ import com.cct.model.Reporte;
 import com.cct.model.Usuario;
 import com.cct.services.ReporteService;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Component
 public class AsyncReportProcessor {
 

@@ -21,6 +21,9 @@ import com.cct.report.AbstractReportProcessor;
 import com.cct.report.ReportProcessorFactory;
 import com.cct.services.ReporteService;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Controller
 @RequestMapping("/reporte")
 public class ReporteController {
@@ -35,7 +38,7 @@ public class ReporteController {
 	private JmsTemplate jmsTemplate;
 	
 	@Autowired 
-    	private RabbitTemplate amqpTemplate;
+	private RabbitTemplate amqpTemplate;
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Reporte> createAsyncReport(@RequestBody ReporteDTO reporteDTO){
