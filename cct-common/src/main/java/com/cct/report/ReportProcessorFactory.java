@@ -15,10 +15,7 @@ public class ReportProcessorFactory {
 	private ApplicationContext applicationContext;
 	
 	public AbstractReportProcessor<?> getReportProcessor(TipoReporte tipoReporte){
-		if (tipoReporte == INVENTARIO)
-			return applicationContext.getBean(InventarioReportProcessor.class);
-		
-		return null;
+		return applicationContext.getBean(InventarioReportProcessor.class);
 	}
 	
 }

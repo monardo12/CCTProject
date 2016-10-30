@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d34705aa-3e27-4435-a937-0635f4c00220" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cct-common/src/main/java/com/cct/config/ApplicationConfig.java" afterPath="$PROJECT_DIR$/cct-common/src/main/java/com/cct/config/ApplicationConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cct-common/src/main/java/com/cct/config/RabbitConfig.java" afterPath="$PROJECT_DIR$/cct-common/src/main/java/com/cct/config/RabbitConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cct-common/src/main/java/com/cct/config/RedisConfig.java" afterPath="$PROJECT_DIR$/cct-common/src/main/java/com/cct/config/RedisConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cct-common/src/main/java/com/cct/services/impl/CotizacionServiceImpl.java" afterPath="$PROJECT_DIR$/cct-common/src/main/java/com/cct/services/impl/CotizacionServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cct-worker/src/main/java/com/cct/report/ReportWorker.java" afterPath="$PROJECT_DIR$/cct-worker/src/main/java/com/cct/report/ReportWorker.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cct-common/src/main/java/com/cct/report/ReportProcessorFactory.java" afterPath="$PROJECT_DIR$/cct-common/src/main/java/com/cct/report/ReportProcessorFactory.java" />
     </list>
     <ignored path="cct-system.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -34,58 +27,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="RedisConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cct-common/src/main/java/com/cct/config/RedisConfig.java">
+      <file leaf-file-name="ReportWorker.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cct-worker/src/main/java/com/cct/report/ReportWorker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RabbitConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cct-common/src/main/java/com/cct/config/RabbitConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+            <state relative-caret-position="-657">
+              <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CotizacionServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cct-common/src/main/java/com/cct/services/impl/CotizacionServiceImpl.java">
+      <file leaf-file-name="ReportProcessorFactory.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cct-common/src/main/java/com/cct/report/ReportProcessorFactory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="31" column="67" selection-start-line="30" selection-start-column="12" selection-end-line="31" selection-end-column="67" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReportWorker.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cct-worker/src/main/java/com/cct/report/ReportWorker.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="22" selection-end-column="32" />
-              <folding>
-                <element signature="e#2908#3136#0" expanded="true" />
-                <element signature="e#3135#3136#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ApplicationConfig.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cct-common/src/main/java/com/cct/config/ApplicationConfig.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="19" column="5" selection-start-line="17" selection-start-column="4" selection-end-line="19" selection-end-column="5" />
+            <state relative-caret-position="165">
+              <caret line="17" column="75" selection-start-line="17" selection-start-column="75" selection-end-line="17" selection-end-column="75" />
               <folding />
             </state>
           </provider>
@@ -108,6 +64,7 @@
         <option value="$PROJECT_DIR$/cct-common/src/main/java/com/cct/config/ApplicationConfig.java" />
         <option value="$PROJECT_DIR$/cct-common/src/main/java/com/cct/config/RedisConfig.java" />
         <option value="$PROJECT_DIR$/cct-worker/src/main/java/com/cct/report/ReportWorker.java" />
+        <option value="$PROJECT_DIR$/cct-common/src/main/java/com/cct/report/ReportProcessorFactory.java" />
       </list>
     </option>
   </component>
@@ -183,7 +140,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="cct-worker" />
+              <option name="myItemId" value="cct-web" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -197,7 +154,43 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="cct-worker" />
+              <option name="myItemId" value="cct-common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cct-system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CCTProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cct-common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cct-system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CCTProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cct-common" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -210,6 +203,48 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cct" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cct-system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CCTProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cct-common" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cct" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -713,12 +748,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1477848974547</updated>
-      <workItem from="1477848976134" duration="1797000" />
+      <workItem from="1477848976134" duration="1849000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1797000" />
+    <option name="totallyTimeSpent" value="1849000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1276" height="777" extended-state="6" />
@@ -781,7 +816,7 @@
     <entry file="file://$PROJECT_DIR$/cct-common/src/main/java/com/cct/config/ApplicationConfig.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
-          <caret line="19" column="5" selection-start-line="17" selection-start-column="4" selection-end-line="19" selection-end-column="5" />
+          <caret line="20" column="0" selection-start-line="18" selection-start-column="8" selection-end-line="19" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -806,12 +841,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cct-worker/src/main/java/com/cct/report/ReportWorker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="22" selection-end-column="32" />
-          <folding>
-            <element signature="e#2908#3136#0" expanded="true" />
-            <element signature="e#3135#3136#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-657">
+          <caret line="18" column="19" selection-start-line="18" selection-start-column="19" selection-end-line="18" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cct-common/src/main/java/com/cct/report/ReportProcessorFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="17" column="75" selection-start-line="17" selection-start-column="75" selection-end-line="17" selection-end-column="75" />
+          <folding />
         </state>
       </provider>
     </entry>
