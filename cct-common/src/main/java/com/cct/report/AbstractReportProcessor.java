@@ -16,6 +16,9 @@ import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.cct.dto.ReporteDTO;
 
 public abstract class AbstractReportProcessor<E> {
