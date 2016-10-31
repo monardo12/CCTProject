@@ -64,7 +64,7 @@ public class RedisClient {
 			throw new IllegalArgumentException("NULL id sent");
 		}
 		LOGGER.info("Storing object in Redis with id {}", key);
-		redisTemplate.opsForValue().set(key, value, getTime(), TimeUnit.SECONDS);
+		redisTemplate.opsForValue().set(key, value);
 	}
 
 	/**

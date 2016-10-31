@@ -9,6 +9,7 @@ import com.cct.dto.ReporteDTO;
 import com.cct.model.Reporte;
 import com.cct.model.Usuario;
 import com.cct.services.ReporteService;
+import com.cct.util.ReporteQueueCacheUtil;
 
 @Component
 public class AsyncReportProcessor {
@@ -19,14 +20,20 @@ public class AsyncReportProcessor {
 	@Autowired
 	private ReportProcessorFactory reportProcessorFactory;
 	
+	@Autowired
+	private ReporteQueueCacheUtil reporteQueueCacheUtil;
+	
 	@JmsListener(destination = "report", containerFactory = "myFactory")
     public void receiveMessage(ReporteDTO reporteDTO) {
         System.out.println("Received <" + reporteDTO + ">");
-        AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
-		reportProcessor.createReport(reporteDTO);
-		Reporte reporte = buildReporte(reporteDTO);
-		reporte.setUrl("url generada async");
-		reporteService.actualizarReporte(reporte);
+        if(reporteQueueCacheUtil.isReporteInCacheQueue(reporteDTO)){
+        	AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
+    		reportProcessor.createReport(reporteDTO);
+    		Reporte reporte = buildReporte(reporteDTO);
+    		reporte.setUrl("JMS");
+    		reporteService.actualizarReporte(reporte);
+    		reporteQueueCacheUtil.deleteReporteFromCacheQueue(reporteDTO);
+        }
     }
 	
 	private Reporte buildReporte(ReporteDTO reporteDTO){

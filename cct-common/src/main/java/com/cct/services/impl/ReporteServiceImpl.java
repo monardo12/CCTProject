@@ -29,6 +29,11 @@ public class ReporteServiceImpl implements ReporteService {
 	public List<Reporte> obtenerReportes() {
 		return reporteRepository.findAll();
 	}
+	
+	@Override
+	public List<Reporte> obtenerReportesSinProcesar() {
+		return reporteRepository.findByUrl(null);
+	}
 
 	@Override
 	public Reporte actualizarReporte(Reporte reporte) {

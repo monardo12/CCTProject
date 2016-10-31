@@ -2,11 +2,10 @@ package com.cct.controller;
 
 import java.util.List;
 
-import org.springframework.amqp.core.AmqpTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.cct.config.RabbitConfig;
 import com.cct.constant.EstadoReporte;
 import com.cct.dto.ReporteDTO;
 import com.cct.model.Reporte;
@@ -24,10 +22,14 @@ import com.cct.model.Usuario;
 import com.cct.report.AbstractReportProcessor;
 import com.cct.report.ReportProcessorFactory;
 import com.cct.services.ReporteService;
+import com.cct.util.ReporteQueueCacheUtil;
+import com.cct.util.ReporteRabbitMQMonitor;
 
 @Controller
 @RequestMapping("/reporte")
 public class ReporteController {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReporteController.class);
 
 	@Autowired
 	private ReporteService reporteService;
@@ -39,19 +41,51 @@ public class ReporteController {
 	private JmsTemplate jmsTemplate;
 	
 	@Autowired 
-    	private RabbitTemplate amqpTemplate;
+	private RabbitTemplate amqpTemplate;
+	
+	@Autowired
+	private ReporteQueueCacheUtil reporteQueueCacheUtil;
+	
+	@Autowired
+	private ReporteRabbitMQMonitor reporteRabbitMQMonitor;
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Reporte> createAsyncReport(@RequestBody ReporteDTO reporteDTO){
+		Reporte reporte = buildReporte(reporteDTO);
+		reporte.setEstado(EstadoReporte.EN_PROCESO);
+		
+		Reporte newReporte = reporteService.crearReporte(reporte);
+		reporteDTO.setId(newReporte.getIdReporte());
+		
+		//Sending to queue		     
+    	sendReportToQueue(reporteDTO);
+		
+		return new ResponseEntity<>(newReporte, HttpStatus.OK);
+	}
+	
+	public void sendReportToQueue(ReporteDTO reporteDTO){
+		reporteQueueCacheUtil.addReporteToCacheQueue(reporteDTO);
+		
+		if(reporteRabbitMQMonitor.isRabbitMQConnectionOpen()){
+			amqpTemplate.convertAndSend(reporteDTO);
+			LOGGER.info("Sent to RabbitMQ: <" + reporteDTO + ">");
+		} else {
+			jmsTemplate.convertAndSend("report", reporteDTO);
+			LOGGER.info("Sent to JMS: <" + reporteDTO + ">");
+		}
+	}
+	
+	@RequestMapping(value = "/rabbitmq", method = RequestMethod.POST)
+	public ResponseEntity<Reporte> createRabbitMQAsyncReport(@RequestBody ReporteDTO reporteDTO){
 		Reporte reporte = buildReporte(reporteDTO);
 		reporte.setEstado(EstadoReporte.EN_PROCESO);
 		Reporte newReporte = reporteService.crearReporte(reporte);
 		reporteDTO.setId(newReporte.getIdReporte());
 		
 		//Sending to queue		     
-        	amqpTemplate.convertAndSend(reporteDTO);
+        amqpTemplate.convertAndSend(reporteDTO);
 
-        	System.out.println("Sent to RabbitMQ: <" + reporteDTO + ">");
+        LOGGER.info("Sent to RabbitMQ: <" + reporteDTO + ">");
 		
 		return new ResponseEntity<>(newReporte, HttpStatus.OK);
 	}
@@ -66,7 +100,7 @@ public class ReporteController {
 		//Sending message
 		jmsTemplate.convertAndSend("report", reporteDTO);
 		
-		System.out.println("Sent: <" + reporteDTO + ">");
+		LOGGER.info("Sent to JMS: <" + reporteDTO + ">");
 		
 		return new ResponseEntity<>(newReporte, HttpStatus.OK);
 	}

@@ -46,5 +46,11 @@ public class HelloWorldController {
 	public String loaderIO() {
 		return "loaderio-0d6da71e28d78fae023635643fd2e089";
 	}
+	
+	@RequestMapping("/loaderio-dc44d0b7c768d24ed2d9376d5ff1594b")
+	@ResponseBody
+	public String loaderIOCarlos() {
+		return "loaderio-dc44d0b7c768d24ed2d9376d5ff1594b";
+	}
 
 }

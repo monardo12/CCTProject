@@ -1,24 +1,30 @@
 package com.cct.config;
 
+import static java.lang.System.getenv;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.Connection;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import static java.lang.System.getenv;
-
 @Configuration
 public class RabbitConfig {
 
     protected final String helloWorldQueueName = "cct.report.queue";
 
+    @Bean
+    public Connection rabbitConnection(){
+    	return rabbitConnectionFactory().createConnection();
+    }
+    
     @Bean
     public ConnectionFactory rabbitConnectionFactory() {
         final URI ampqUrl;
@@ -34,7 +40,8 @@ public class RabbitConfig {
         factory.setHost(ampqUrl.getHost());
         factory.setPort(ampqUrl.getPort());
         factory.setVirtualHost(ampqUrl.getPath().substring(1));
-
+        factory.setRequestedHeartBeat(15);
+        
         return factory;
     }
 

@@ -11,6 +11,8 @@ public interface ReporteService {
 	Reporte obtenerReporte(Long idReporte);
 
 	List<Reporte> obtenerReportes();
+	
+	List<Reporte> obtenerReportesSinProcesar();
 
 	Reporte actualizarReporte(Reporte reporte);
 

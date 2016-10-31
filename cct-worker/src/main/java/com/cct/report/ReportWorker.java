@@ -18,6 +18,7 @@ import com.cct.dto.ReporteDTO;
 import com.cct.model.Reporte;
 import com.cct.model.Usuario;
 import com.cct.services.ReporteService;
+import com.cct.util.ReporteQueueCacheUtil;
 
 public class ReportWorker {
 
@@ -30,6 +31,7 @@ public class ReportWorker {
         final ApplicationContext applicationConfig = new AnnotationConfigApplicationContext(ApplicationConfig.class);
         final ReporteService reporteService = applicationConfig.getBean(ReporteService.class);
         final ReportProcessorFactory reportProcessorFactory = applicationConfig.getBean(ReportProcessorFactory.class);
+        final ReporteQueueCacheUtil reporteQueueCacheUtil = applicationConfig.getBean(ReporteQueueCacheUtil.class);
         
         // create a listener container, which is required for asynchronous message consumption.
         // AmqpTemplate cannot be used in this case
@@ -42,11 +44,14 @@ public class ReportWorker {
             public void onMessage(Message message) {
                 final ReporteDTO reporteDTO = (ReporteDTO) messageConverter.fromMessage(message);
                 System.out.println("Received <" + reporteDTO + ">");
-                AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
-        		reportProcessor.createReport(reporteDTO);
-        		Reporte reporte = buildReporte(reporteDTO);
-        		reporte.setUrl("url generada async");
-        		reporteService.actualizarReporte(reporte);
+                if(reporteQueueCacheUtil.isReporteInCacheQueue(reporteDTO)){
+                	AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
+            		reportProcessor.createReport(reporteDTO);
+            		Reporte reporte = buildReporte(reporteDTO);
+            		reporte.setUrl("RabbitMQ");
+            		reporteService.actualizarReporte(reporte);
+            		reporteQueueCacheUtil.deleteReporteFromCacheQueue(reporteDTO);
+                }
             }
         });
 
