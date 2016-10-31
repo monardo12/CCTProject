@@ -16,6 +16,8 @@ import net.sf.jasperreports.engine.data.JRTableModelDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.logging.Level;
+
 import com.cct.dto.ReporteDTO;
 
 public abstract class AbstractReportProcessor<E> {
@@ -34,9 +36,11 @@ public abstract class AbstractReportProcessor<E> {
 		    output = JasperExportManager.exportReportToPdf(print);
 		    LOGGER.debug("Generación de reporte finalizada");
 		} catch (JRException e) {
-			LOGGER.error(e.getMessage());	
+			java.util.logging.Logger logger = java.util.logging.Logger.getAnonymousLogger();
+			logger.log(Level.SEVERE, e.getMessage(), e);
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage());	
+			java.util.logging.Logger logger = java.util.logging.Logger.getAnonymousLogger();
+			logger.log(Level.SEVERE, e.getMessage(), e);
 		}	
 		return output;
 	}

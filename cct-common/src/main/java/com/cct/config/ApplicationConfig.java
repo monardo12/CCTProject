@@ -15,6 +15,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("com.cct.model")
 public class ApplicationConfig {
 
+	private  ApplicationConfig(){
+        
+    }
+
 	@Bean
     public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();

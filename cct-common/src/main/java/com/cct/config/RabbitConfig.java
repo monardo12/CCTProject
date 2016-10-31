@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-    protected final String helloWorldQueueName = "cct.report.queue";
+    protected static final String helloWorldQueueName = "cct.report.queue";
 
     @Bean
     public Connection rabbitConnection(){
@@ -40,8 +40,7 @@ public class RabbitConfig {
         factory.setHost(ampqUrl.getHost());
         factory.setPort(ampqUrl.getPort());
         factory.setVirtualHost(ampqUrl.getPath().substring(1));
-        factory.setRequestedHeartBeat(15);
-        
+
         return factory;
     }
 
@@ -53,14 +52,14 @@ public class RabbitConfig {
     @Bean
     public RabbitTemplate rabbitTemplate() {
         RabbitTemplate template = new RabbitTemplate(rabbitConnectionFactory());
-        template.setRoutingKey(this.helloWorldQueueName);
-        template.setQueue(this.helloWorldQueueName);
+        template.setRoutingKey(helloWorldQueueName);
+        template.setQueue(helloWorldQueueName);
         return template;
     }
 
     @Bean
     public Queue queue() {
-        return new Queue(this.helloWorldQueueName);
+        return new Queue(helloWorldQueueName);
     }
 
     private static String getEnvOrThrow(String name) {

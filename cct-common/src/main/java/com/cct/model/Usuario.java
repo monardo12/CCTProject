@@ -37,6 +37,7 @@ public class Usuario implements Serializable {
 	private List<Reporte> reportes;
 
 	public Usuario() {
+		// No require inicialización
 	}
 
 	public Long getIdUsuario() {

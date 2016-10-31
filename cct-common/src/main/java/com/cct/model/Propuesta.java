@@ -39,6 +39,7 @@ public class Propuesta implements Serializable {
 	private Socio socio;
 
 	public Propuesta() {
+		// No require inicialización
 	}
 
 	public Long getIdPropuesta() {

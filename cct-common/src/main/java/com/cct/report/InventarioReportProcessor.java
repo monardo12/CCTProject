@@ -17,6 +17,9 @@ import com.cct.dto.ReporteDTO;
 import com.cct.model.Inventario;
 import com.cct.repo.InventarioRepository;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Component
 public class InventarioReportProcessor extends AbstractReportProcessor<Inventario> {
 
@@ -55,7 +58,9 @@ public class InventarioReportProcessor extends AbstractReportProcessor<Inventari
 			.append(File.separator)
 			.append("InventarioReport.jrxml")
 			.toString();
-		System.out.println("Finding: " + reportUrl);
+			
+		Logger logger = Logger.getAnonymousLogger();
+        logger.log(Level.SEVERE, "Finding: " + reportUrl);
 		return reportUrl;
 	}
 }

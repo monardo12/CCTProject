@@ -13,6 +13,9 @@ import com.cct.model.Item;
 import com.cct.repo.CotizacionRepository;
 import com.cct.services.CotizacionService;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 @Service
 public class CotizacionServiceImpl implements CotizacionService {
 	
@@ -25,7 +28,8 @@ public class CotizacionServiceImpl implements CotizacionService {
 		try {
 			cotizacion.setFechaCreacion(new SimpleDateFormat("YYYY/MM/DD").parse(formatter));
 		} catch (ParseException e) {
-			e.printStackTrace();
+			Logger logger = Logger.getAnonymousLogger();
+			logger.log(Level.SEVERE, "an exception was thrown", e);
 		}
 		cotizacion.setValorItem(((List<Item>)cotizacion.getItems()).get(0).getPrecio());
 		cotizacion.setTotal(((List<Item>)cotizacion.getItems()).get(0).getPrecio() * cotizacion.getCantidadItem());		

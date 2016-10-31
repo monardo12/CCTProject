@@ -11,7 +11,7 @@ public class RedisHolder<E> {
 	@Autowired
 	private RedisClient redisClient;
 	
-	private ObjectSerializer<E> serializer = new ObjectSerializer<E>();
+	private ObjectSerializer<E> serializer = new ObjectSerializer<>();
 	
 	public void add(E object, String key){
 		String json = serializer.serializeObject(object);

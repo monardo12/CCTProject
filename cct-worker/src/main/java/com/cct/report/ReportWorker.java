@@ -1,5 +1,7 @@
 package com.cct.report;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 import org.springframework.amqp.core.Queue;
@@ -22,6 +24,12 @@ import com.cct.util.ReporteQueueCacheUtil;
 
 public class ReportWorker {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(ReportWorker.class);
+	
+	private ReportWorker() {
+		// No requiere inicialización
+	}
+
 	public static void main(String[] args) {
         final ApplicationContext rabbitConfig = new AnnotationConfigApplicationContext(RabbitConfig.class);
         final ConnectionFactory rabbitConnectionFactory = rabbitConfig.getBean(ConnectionFactory.class);
@@ -43,7 +51,7 @@ public class ReportWorker {
         listenerContainer.setMessageListener(new MessageListener() {
             public void onMessage(Message message) {
                 final ReporteDTO reporteDTO = (ReporteDTO) messageConverter.fromMessage(message);
-                System.out.println("Received <" + reporteDTO + ">");
+                LOGGER.info("Received <" + reporteDTO + ">");
                 if(reporteQueueCacheUtil.isReporteInCacheQueue(reporteDTO)){
                 	AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
             		reportProcessor.createReport(reporteDTO);
@@ -58,7 +66,7 @@ public class ReportWorker {
         // set a simple error handler
         listenerContainer.setErrorHandler(new ErrorHandler() {
             public void handleError(Throwable t) {
-                t.printStackTrace();
+            	LOGGER.info(t.getMessage(), t);
             }
         });
 
@@ -66,14 +74,14 @@ public class ReportWorker {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-                System.out.println("Shutting down ReportWorker");
+            	LOGGER.info("Shutting down ReportWorker");
                 listenerContainer.shutdown();
             }
         });
 
         // start up the listener. this will block until JVM is killed.
         listenerContainer.start();
-        System.out.println("ReportWorker started");
+        LOGGER.info("ReportWorker started");
     }
 	
 	private static Reporte buildReporte(ReporteDTO reporteDTO){

@@ -41,6 +41,7 @@ public class Reporte implements Serializable {
 	private Usuario usuario;
 
 	public Reporte() {
+		// No require inicialización
 	}
 
 	public Long getIdReporte() {

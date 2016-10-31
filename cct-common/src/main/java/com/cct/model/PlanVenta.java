@@ -56,6 +56,7 @@ public class PlanVenta implements Serializable {
 	private List<Servicio> servicios;
 
 	public PlanVenta() {
+		// No require inicialización
 	}
 
 	public Long getIdPlanVenta() {

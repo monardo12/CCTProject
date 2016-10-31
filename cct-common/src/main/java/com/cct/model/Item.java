@@ -44,7 +44,7 @@ public class Item implements Serializable {
 	private List<Servicio> servicios;
 
 	public Item() {
-
+		// No require inicialización
 	}
 
 	public Long getIdItem() {

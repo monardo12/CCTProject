@@ -50,7 +50,7 @@ public class Cotizacion implements Serializable {
 	private Double total;
 
 	public Cotizacion() {
-
+		// No requiere inicializacion
 	}
 
 	public Cotizacion(Long idCotizacion, Servicio servicio, Cliente cliente,

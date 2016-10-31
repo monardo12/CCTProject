@@ -14,6 +14,9 @@ public class HelloWorldController {
 
 	@Autowired
 	private RedisClient redisClient;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
 
 	@RequestMapping("/")
 	@ResponseBody
@@ -24,16 +27,13 @@ public class HelloWorldController {
 		} else {
 			int value = Integer.parseInt((String) obj);
 			value++;
-			redisClient.put("key", value + "");
+			redisClient.put("key", Integer.toString(value));
 		}
 
 		int realValue = Integer.parseInt((String) redisClient.get("key"));
 
 		return "Value: " + realValue;
 	}
-
-	@Autowired
-	private ClienteRepository clienteRepository;
 	
 	@RequestMapping("/hello")
 	@ResponseBody

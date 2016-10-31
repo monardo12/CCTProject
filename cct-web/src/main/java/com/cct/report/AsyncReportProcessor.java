@@ -1,5 +1,7 @@
 package com.cct.report;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,8 @@ import com.cct.util.ReporteQueueCacheUtil;
 @Component
 public class AsyncReportProcessor {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(AsyncReportProcessor.class);
+	
 	@Autowired
 	private ReporteService reporteService;
 	
@@ -25,7 +29,7 @@ public class AsyncReportProcessor {
 	
 	@JmsListener(destination = "report", containerFactory = "myFactory")
     public void receiveMessage(ReporteDTO reporteDTO) {
-        System.out.println("Received <" + reporteDTO + ">");
+		LOGGER.info("Received <" + reporteDTO + ">");
         if(reporteQueueCacheUtil.isReporteInCacheQueue(reporteDTO)){
         	AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
     		reportProcessor.createReport(reporteDTO);
