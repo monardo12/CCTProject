@@ -12,19 +12,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-	  auth.inMemoryAuthentication().withUser("user").password("123456").roles("ROLE_USER");
-	  auth.inMemoryAuthentication().withUser("admin").password("123456").roles("ROLE_ADMIN");
-	  auth.inMemoryAuthentication().withUser("dba").password("123456").roles("ROLE_DBA");
+	  auth.inMemoryAuthentication().withUser("user").password("123456").roles("USER");
+	  auth.inMemoryAuthentication().withUser("admin").password("123456").roles("ADMIN");
+	  auth.inMemoryAuthentication().withUser("dba").password("123456").roles("DBA");
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
 	  http.authorizeRequests()
-		.antMatchers("/cliente/**").access("hasRole('ROLE_USER')")
-		.antMatchers("/cotizacion/**").access("hasRole('ROLE_ADMIN')")
-		.antMatchers("/inventario/**").access("hasRole('ROLE_DBA')")
-		.antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
+		.antMatchers("/cliente/**").access("hasRole('USER')")
+		.antMatchers("/cotizacion/**").access("hasRole('ADMIN')")
+		.antMatchers("/inventario/**").access("hasRole('DBA')")
+		.antMatchers("/dba/**").access("hasRole('ADMIN') or hasRole('DBA')")
 		.and().formLogin();
 
 	}
