@@ -63,7 +63,7 @@ public class RedisClient {
 		if(key == null) {
 			throw new IllegalArgumentException("NULL id sent");
 		}
-		LOGGER.info("Storing object in Redis with id {}", key);
+		LOGGER.debug("Storing object in Redis with id {}", key);
 		redisTemplate.opsForValue().set(key, value);
 	}
 
@@ -78,7 +78,7 @@ public class RedisClient {
 		if(key == null) {
 			throw new IllegalArgumentException("NULL id sent");
 		}
-		LOGGER.info("Storing value in Redis with key {}", key);
+		LOGGER.debug("Storing value in Redis with key {}", key);
 		redisTemplate.opsForValue().set(key, value, timeOut, TimeUnit.SECONDS);
 	}
 
@@ -92,7 +92,7 @@ public class RedisClient {
 		if(id == null) {
 			throw new IllegalArgumentException("NULL id sent");
 		}
-		LOGGER.info("Load object from Redis with id {}", id);
+		LOGGER.debug("Load object from Redis with id {}", id);
 		return redisTemplate.opsForValue().get(id);
 	}
 	

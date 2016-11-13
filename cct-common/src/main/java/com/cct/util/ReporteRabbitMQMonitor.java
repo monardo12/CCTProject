@@ -39,7 +39,7 @@ public class ReporteRabbitMQMonitor {
 	
 	private boolean isRabbitMQRunning = true;
 	
-	@Scheduled(fixedDelay=5000)
+	@Scheduled(fixedDelay=30000)
 	private void monitorRabbitMQ(){
 		if(rabbitConnection.isOpen()){
 			LOGGER.info("RabbitMQ connection is open");
@@ -66,22 +66,34 @@ public class ReporteRabbitMQMonitor {
 	}
 	
 	private void recoverAndPutReportsInRabbitMQ(){
+		LOGGER.info("Checking for JMS unprocessed reports");
 		ReporteDTOQueue reporteQueue = reporteQueueCacheUtil.getReporteQueueCache();
 		
-		//Recover messages from cache and send them to RabbitMQ
-		for(ReporteDTO reporteDTO : reporteQueue.getReporteList().values()){
-			amqpTemplate.convertAndSend(reporteDTO);
-			System.out.println("Sent to RabbitMQ: <" + reporteDTO + ">");
+		if(reporteQueue.getReporteList().isEmpty()){
+			LOGGER.info("There are no JMS unprocessed reports");
+		} else {
+			LOGGER.info("Processing unprcessed JMS reports");
+			//Recover messages from cache and send them to RabbitMQ
+			for(ReporteDTO reporteDTO : reporteQueue.getReporteList().values()){
+				amqpTemplate.convertAndSend(reporteDTO);
+				System.out.println("Sending unprocessed report to RabbitMQ: <" + reporteDTO + ">");
+			}
 		}
 	}
 	
 	private void recoverAndPutReportsInJMS(){
+		LOGGER.info("Checking for RabbitMQ unprocessed reports");
 		ReporteDTOQueue reporteQueue = reporteQueueCacheUtil.getReporteQueueCache();
 		
 		//Recover messages from cache and send them to JMS
-		for(ReporteDTO reporteDTO : reporteQueue.getReporteList().values()){
-			jmsTemplate.convertAndSend("report", reporteDTO);
-			System.out.println("Sent to JMS: <" + reporteDTO + ">");
+		if(reporteQueue.getReporteList().isEmpty()){
+			LOGGER.info("There are no RabbitMQ unprocessed reports");
+		} else {
+			LOGGER.info("Processing unprocessed RabbitMQ reports");
+			for(ReporteDTO reporteDTO : reporteQueue.getReporteList().values()){
+				jmsTemplate.convertAndSend("report", reporteDTO);
+				LOGGER.info("Sending to JMS: <" + reporteDTO + ">");
+			}
 		}
 	}
 	
@@ -116,10 +128,10 @@ public class ReporteRabbitMQMonitor {
 					
 					if(rabbitConnection.isOpen()){
 						amqpTemplate.convertAndSend(reporteDTO);
-						System.out.println("Sent to RabbitMQ: <" + reporteDTO + ">");
+						LOGGER.info("Sent to RabbitMQ: <" + reporteDTO + ">");
 					} else {
 						jmsTemplate.convertAndSend("report", reporteDTO);
-						System.out.println("Sent to JMS: <" + reporteDTO + ">");
+						LOGGER.info("Sent to JMS: <" + reporteDTO + ">");
 					}
 				}
 			}
