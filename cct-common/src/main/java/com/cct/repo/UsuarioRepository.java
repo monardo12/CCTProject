@@ -6,4 +6,6 @@ import com.cct.model.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
+	public Usuario findByUsername(String username);
+	
 }
