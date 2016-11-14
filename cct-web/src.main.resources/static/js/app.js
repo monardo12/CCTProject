@@ -1,0 +1,1 @@
+var cctApp = angular.module('cctApp', ['ui.router', 'ui.bootstrap']);

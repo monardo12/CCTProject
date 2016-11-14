@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import com.cct.security.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -35,6 +38,11 @@ public class Usuario implements Serializable {
 	private String privateKey;
 	
 	private String publicKey;
+	
+	private String privateLogin;
+	
+	@Enumerated(EnumType.STRING)
+	private UserRole role;
 
 	//bi-directional many-to-one association to PlanVenta
 	@OneToMany(mappedBy="usuario")
@@ -120,6 +128,22 @@ public class Usuario implements Serializable {
 
 	public void setReportes(List<Reporte> reportes) {
 		this.reportes = reportes;
+	}
+
+	public String getPrivateLogin() {
+		return privateLogin;
+	}
+
+	public void setPrivateLogin(String privateLogin) {
+		this.privateLogin = privateLogin;
+	}
+
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setRole(UserRole role) {
+		this.role = role;
 	}
 
 }

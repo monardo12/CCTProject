@@ -24,7 +24,7 @@ public class HelloWorldController {
 	@Autowired
 	private ClienteRepository clienteRepository;
 
-	@RequestMapping("/")
+	@RequestMapping("/test")
 	@ResponseBody
 	public String helloWorld(){
 		Object obj = redisClient.get("key");

@@ -1,12 +1,17 @@
 package com.cct.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Controller;
@@ -106,10 +111,25 @@ public class ReporteController {
 	}
 	
 	@RequestMapping(value = "/direct", method = RequestMethod.POST)
-	public ResponseEntity<byte[]> createReport(@RequestBody ReporteDTO reporteDTO){
+	public void createReport(@RequestBody ReporteDTO reporteDTO, HttpServletResponse response){
+		Reporte reporte = buildReporte(reporteDTO);
+		reporte.setEstado(EstadoReporte.GENERADO);
+		reporte.setUrl("direct");
+		
+		Reporte newReporte = reporteService.crearReporte(reporte);
+		reporteDTO.setId(newReporte.getIdReporte());
+		
 		AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
-		byte[] report = reportProcessor.createReport(reporteDTO);
-		return new ResponseEntity<>(report, HttpStatus.OK);
+		byte[] reportAsBytes = reportProcessor.createReport(reporteDTO);
+		
+		try {
+			OutputStream output = response.getOutputStream();
+			output.write(reportAsBytes);
+			response.setContentType(MediaType.APPLICATION_PDF_VALUE);
+			response.flushBuffer();
+		} catch (IOException e) {
+			LOGGER.error(e.getMessage(), e);
+		}
 	}
 	
 	@RequestMapping(value = "/{idReporte}", method = RequestMethod.GET)
