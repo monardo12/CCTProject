@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import com.cct.services.ServicioService;
 
 @Controller
 @RequestMapping("/cotizacion")
+@Secured({"ROLE_USER", "ROLE_ADMIN"})
 public class CotizacionController {
 
 	@Autowired

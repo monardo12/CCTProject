@@ -11,10 +11,6 @@ public class UsuarioDTO {
 	private String username;
 	
 	private String password;
-	
-	private String privateKey;
-	
-	private String publicKey;
 
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -54,22 +50,6 @@ public class UsuarioDTO {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getPrivateKey() {
-		return privateKey;
-	}
-
-	public void setPrivateKey(String privateKey) {
-		this.privateKey = privateKey;
-	}
-
-	public String getPublicKey() {
-		return publicKey;
-	}
-
-	public void setPublicKey(String publicKey) {
-		this.publicKey = publicKey;
 	}
 
 }

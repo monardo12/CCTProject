@@ -14,7 +14,7 @@ import com.cct.services.ClienteService;
 
 @Controller
 @RequestMapping("/cliente")
-@Secured("ROLE_ADMIN")
+@Secured({"ROLE_USER", "ROLE_ADMIN"})
 public class ClienteController {
 
 	@Autowired
