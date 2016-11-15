@@ -16,16 +16,18 @@ public class JwtUserDetails implements UserDetails {
     private final String name;
     private final String password;
     private final String email;
+    private final String privateKey;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public JwtUserDetails(Long id, String username, String name, String email, String password,
-    		Collection<? extends GrantedAuthority> authorities) {
+    		String privateKey, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.privateKey = privateKey;
     }
 
     @JsonIgnore
@@ -78,6 +80,10 @@ public class JwtUserDetails implements UserDetails {
     @Override
     public boolean isEnabled(){
     	return true;
+    }
+    
+    public String getPrivateKey(){
+    	return privateKey;
     }
     
 }

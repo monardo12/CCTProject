@@ -19,6 +19,8 @@ public class ReporteDTO implements Serializable{
 	
 	private Long idUsuario;
 	
+	private String key;
+	
 	private String signature;
 
 	public TipoReporte getTipo() {
@@ -74,6 +76,14 @@ public class ReporteDTO implements Serializable{
 
 	public void setSignature(String signature) {
 		this.signature = signature;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
 	}
 	
 }

@@ -73,6 +73,7 @@ public class ReporteController {
 		
 		Reporte newReporte = reporteService.crearReporte(reporte);
 		reporteDTO.setId(newReporte.getIdReporte());
+		reporteDTO.setKey(getUserDetails().getPrivateKey());
 		
 		//Sending to queue		     
     	sendReportToQueue(reporteDTO);
@@ -100,6 +101,7 @@ public class ReporteController {
 		reporte.setEstado(EstadoReporte.EN_PROCESO);
 		Reporte newReporte = reporteService.crearReporte(reporte);
 		reporteDTO.setId(newReporte.getIdReporte());
+		reporteDTO.setKey(getUserDetails().getPrivateKey());
 		
 		//Sending to queue		     
         amqpTemplate.convertAndSend(reporteDTO);
@@ -117,6 +119,7 @@ public class ReporteController {
 		reporte.setEstado(EstadoReporte.EN_PROCESO);
 		Reporte newReporte = reporteService.crearReporte(reporte);
 		reporteDTO.setId(newReporte.getIdReporte());
+		reporteDTO.setKey(getUserDetails().getPrivateKey());
 
 		//Sending message
 		jmsTemplate.convertAndSend("report", reporteDTO);
@@ -128,6 +131,8 @@ public class ReporteController {
 	
 	@RequestMapping(value = "/pdf", method = RequestMethod.POST)
 	public void createReport(@RequestBody ReporteDTO reporteDTO, HttpServletResponse response){
+		
+		reporteDTO.setKey(getUserDetails().getPrivateKey());
 		
 		AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
 		byte[] reportAsBytes = reportProcessor.createReport(reporteDTO);

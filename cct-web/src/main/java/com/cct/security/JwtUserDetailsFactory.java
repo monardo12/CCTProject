@@ -13,6 +13,7 @@ public final class JwtUserDetailsFactory {
         		usuario.getNombre(),
         		usuario.getEmail(),
         		usuario.getPassword(),
+        		usuario.getPrivateKey(),
                 Arrays.asList(usuario.getRole())
         );
     }

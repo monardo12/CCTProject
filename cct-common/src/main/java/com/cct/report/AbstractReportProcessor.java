@@ -44,8 +44,8 @@ public abstract class AbstractReportProcessor<E> {
 		    SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
 		    configuration.setEncrypted(true);
 		    configuration.set128BitKey(true);
-		    configuration.setUserPassword("jasper");
-		    configuration.setOwnerPassword("reports");
+		    configuration.setUserPassword(reporteDTO.getKey());
+		    configuration.setOwnerPassword(reporteDTO.getKey());
 		    configuration.setPermissions(PdfWriter.ALLOW_COPY | PdfWriter.ALLOW_PRINTING);
 		    exporter.setConfiguration(configuration);
 		    exporter.exportReport();
