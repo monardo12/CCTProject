@@ -11,23 +11,32 @@ import com.cct.constant.EstadoReporte;
 import com.cct.dto.ReporteDTO;
 import com.cct.model.Reporte;
 import com.cct.model.Usuario;
+import com.cct.services.JwtUserDetailsService;
 import com.cct.services.ReporteService;
+import com.cct.util.MailSender;
 import com.cct.util.ReporteQueueCacheUtil;
 
 @Component
 public class AsyncReportProcessor {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AsyncReportProcessor.class);
-	
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(AsyncReportProcessor.class);
+
 	@Autowired
 	private ReporteService reporteService;
-	
+
 	@Autowired
 	private ReportProcessorFactory reportProcessorFactory;
-	
+
 	@Autowired
 	private ReporteQueueCacheUtil reporteQueueCacheUtil;
-	
+
+	@Autowired
+	private JwtUserDetailsService jwtUserDetailsService;
+
+	@Autowired
+	private MailSender mailSender;
+
 	@JmsListener(destination = "report", containerFactory = "myFactory")
     public void receiveMessage(ReporteDTO reporteDTO) {
 		LOGGER.info("Received <" + reporteDTO + ">");
@@ -41,20 +50,25 @@ public class AsyncReportProcessor {
     		reporte.setMd5(md5);
     		
     		reporteService.actualizarReporte(reporte);
+    		
+//    		mailSender.sendEmail(
+//    				jwtUserDetailsService.loadUserDetailsFromSecurityContextHolder().getEmail(),
+//    				reportAsBytes, reporte);
+    		
     		reporteQueueCacheUtil.deleteReporteFromCacheQueue(reporteDTO);
         }
     }
-	
-	private Reporte buildReporte(ReporteDTO reporteDTO){
+
+	private Reporte buildReporte(ReporteDTO reporteDTO) {
 		Reporte reporte = new Reporte();
 		reporte.setIdReporte(reporteDTO.getId());
 		reporte.setEstado(EstadoReporte.GENERADO);
 		reporte.setTipo(reporteDTO.getTipo());
-		
+
 		Usuario usuario = new Usuario();
 		usuario.setIdUsuario(reporteDTO.getIdUsuario());
 		reporte.setUsuario(usuario);
 		return reporte;
 	}
-	
+
 }

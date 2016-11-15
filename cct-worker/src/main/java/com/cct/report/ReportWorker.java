@@ -1,10 +1,5 @@
 package com.cct.report;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +21,8 @@ import com.cct.dto.ReporteDTO;
 import com.cct.model.Reporte;
 import com.cct.model.Usuario;
 import com.cct.services.ReporteService;
+import com.cct.services.UsuarioService;
+import com.cct.util.MailSender;
 import com.cct.util.ReporteQueueCacheUtil;
 
 public class ReportWorker {
@@ -44,6 +41,8 @@ public class ReportWorker {
         
         final ApplicationContext applicationConfig = new AnnotationConfigApplicationContext(ApplicationConfig.class);
         final ReporteService reporteService = applicationConfig.getBean(ReporteService.class);
+        final UsuarioService usuarioService = applicationConfig.getBean(UsuarioService.class);
+        final MailSender mailSender = applicationConfig.getBean(MailSender.class);
         final ReportProcessorFactory reportProcessorFactory = applicationConfig.getBean(ReportProcessorFactory.class);
         final ReporteQueueCacheUtil reporteQueueCacheUtil = applicationConfig.getBean(ReporteQueueCacheUtil.class);
         
@@ -66,6 +65,10 @@ public class ReportWorker {
             		reporte.setUrl("RabbitMQ");
             		reporte.setMd5(md5);
             		reporteService.actualizarReporte(reporte);
+            		
+            		Usuario usuario = usuarioService.obtenerUsuario(reporteDTO.getIdUsuario());
+            		mailSender.sendEmail(usuario.getEmail(), reportAsBytes, reporte);
+            		
             		reporteQueueCacheUtil.deleteReporteFromCacheQueue(reporteDTO);
                 }
             }

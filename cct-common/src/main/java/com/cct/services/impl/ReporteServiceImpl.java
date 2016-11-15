@@ -39,6 +39,10 @@ public class ReporteServiceImpl implements ReporteService {
 
 	@Override
 	public Reporte actualizarReporte(Reporte reporte) {
+		Reporte reporteActual = reporteRepository.findOne(reporte.getIdReporte());
+		reporteActual.setEstado(reporte.getEstado());
+		reporteActual.setUrl(reporte.getUrl());
+		reporteActual.setMd5(reporte.getMd5());
 		return reporteRepository.save(reporte);
 	}
 

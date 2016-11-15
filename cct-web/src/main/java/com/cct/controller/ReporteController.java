@@ -32,6 +32,7 @@ import com.cct.report.AbstractReportProcessor;
 import com.cct.report.ReportProcessorFactory;
 import com.cct.security.JwtUserDetails;
 import com.cct.services.ReporteService;
+import com.cct.util.MailSender;
 import com.cct.util.ReporteQueueCacheUtil;
 import com.cct.util.ReporteRabbitMQMonitor;
 
@@ -60,9 +61,12 @@ public class ReporteController {
 	@Autowired
 	private ReporteRabbitMQMonitor reporteRabbitMQMonitor;
 	
+	@Autowired
+	private MailSender mailSender;
+	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Reporte> createAsyncReport(@RequestBody ReporteDTO reporteDTO){
-		Long idUsuario = getIdUsuarioFromSecurityContextHolder();
+		Long idUsuario = getUserDetails().getId();
 		reporteDTO.setIdUsuario(idUsuario);
 		Reporte reporte = buildReporte(reporteDTO);
 		reporte.setEstado(EstadoReporte.EN_PROCESO);
@@ -90,7 +94,7 @@ public class ReporteController {
 	
 	@RequestMapping(value = "/rabbitmq", method = RequestMethod.POST)
 	public ResponseEntity<Reporte> createRabbitMQAsyncReport(@RequestBody ReporteDTO reporteDTO){
-		Long idUsuario = getIdUsuarioFromSecurityContextHolder();
+		Long idUsuario = getUserDetails().getId();
 		reporteDTO.setIdUsuario(idUsuario);
 		Reporte reporte = buildReporte(reporteDTO);
 		reporte.setEstado(EstadoReporte.EN_PROCESO);
@@ -107,7 +111,7 @@ public class ReporteController {
 	
 	@RequestMapping(value = "/jms", method = RequestMethod.POST)
 	public ResponseEntity<Reporte> createJmsAsyncReport(@RequestBody ReporteDTO reporteDTO){
-		Long idUsuario = getIdUsuarioFromSecurityContextHolder();
+		Long idUsuario = getUserDetails().getId();
 		reporteDTO.setIdUsuario(idUsuario);
 		Reporte reporte = buildReporte(reporteDTO);
 		reporte.setEstado(EstadoReporte.EN_PROCESO);
@@ -122,12 +126,6 @@ public class ReporteController {
 		return new ResponseEntity<>(newReporte, HttpStatus.OK);
 	}
 	
-	private Long getIdUsuarioFromSecurityContextHolder(){
-		UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-		JwtUserDetails userDetails = (JwtUserDetails) authenticationToken.getPrincipal();
-		return userDetails.getId();
-	}
-	
 	@RequestMapping(value = "/pdf", method = RequestMethod.POST)
 	public void createReport(@RequestBody ReporteDTO reporteDTO, HttpServletResponse response){
 		
@@ -135,7 +133,7 @@ public class ReporteController {
 		byte[] reportAsBytes = reportProcessor.createReport(reporteDTO);
 		String md5 = DigestUtils.md5Hex(reportAsBytes);
 		
-		Long idUsuario = getIdUsuarioFromSecurityContextHolder();
+		Long idUsuario = getUserDetails().getId();
 		reporteDTO.setIdUsuario(idUsuario);
 		Reporte reporte = buildReporte(reporteDTO);
 		reporte.setEstado(EstadoReporte.GENERADO);
@@ -143,6 +141,7 @@ public class ReporteController {
 		reporte.setMd5(md5);
 		
 		reporteService.crearReporte(reporte);
+		mailSender.sendEmail(getUserDetails().getEmail(), reportAsBytes, reporte);
 		
 		try {
 			OutputStream output = response.getOutputStream();
@@ -175,6 +174,11 @@ public class ReporteController {
 		usuario.setIdUsuario(reporteDTO.getIdUsuario());
 		reporte.setUsuario(usuario);
 		return reporte;
+	}
+	
+	private JwtUserDetails getUserDetails(){
+		UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+		return (JwtUserDetails) authenticationToken.getPrincipal();
 	}
 
 }

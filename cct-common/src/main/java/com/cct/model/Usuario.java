@@ -88,6 +88,7 @@ public class Usuario implements Serializable {
 		this.username = username;
 	}
 
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -96,6 +97,7 @@ public class Usuario implements Serializable {
 		this.password = password;
 	}
 
+	@JsonIgnore
 	public String getPrivateKey() {
 		return privateKey;
 	}
@@ -130,6 +132,7 @@ public class Usuario implements Serializable {
 		this.reportes = reportes;
 	}
 
+	@JsonIgnore
 	public String getPrivateLogin() {
 		return privateLogin;
 	}
