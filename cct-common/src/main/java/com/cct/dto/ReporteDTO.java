@@ -18,6 +18,8 @@ public class ReporteDTO implements Serializable{
 	private Date fechaFinal;
 	
 	private Long idUsuario;
+	
+	private String signature;
 
 	public TipoReporte getTipo() {
 		return tipo;
@@ -64,6 +66,14 @@ public class ReporteDTO implements Serializable{
 		return "ReporteDTO [id=" + id + ", tipo=" + tipo + ", fechaInicial="
 				+ fechaInicial + ", fechaFinal=" + fechaFinal + ", idUsuario="
 				+ idUsuario + "]";
+	}
+
+	public String getSignature() {
+		return signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
 	}
 	
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -15,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +30,7 @@ import com.cct.model.Reporte;
 import com.cct.model.Usuario;
 import com.cct.report.AbstractReportProcessor;
 import com.cct.report.ReportProcessorFactory;
+import com.cct.security.JwtUserDetails;
 import com.cct.services.ReporteService;
 import com.cct.util.ReporteQueueCacheUtil;
 import com.cct.util.ReporteRabbitMQMonitor;
@@ -58,6 +62,8 @@ public class ReporteController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<Reporte> createAsyncReport(@RequestBody ReporteDTO reporteDTO){
+		Long idUsuario = getIdUsuarioFromSecurityContextHolder();
+		reporteDTO.setIdUsuario(idUsuario);
 		Reporte reporte = buildReporte(reporteDTO);
 		reporte.setEstado(EstadoReporte.EN_PROCESO);
 		
@@ -84,6 +90,8 @@ public class ReporteController {
 	
 	@RequestMapping(value = "/rabbitmq", method = RequestMethod.POST)
 	public ResponseEntity<Reporte> createRabbitMQAsyncReport(@RequestBody ReporteDTO reporteDTO){
+		Long idUsuario = getIdUsuarioFromSecurityContextHolder();
+		reporteDTO.setIdUsuario(idUsuario);
 		Reporte reporte = buildReporte(reporteDTO);
 		reporte.setEstado(EstadoReporte.EN_PROCESO);
 		Reporte newReporte = reporteService.crearReporte(reporte);
@@ -99,6 +107,8 @@ public class ReporteController {
 	
 	@RequestMapping(value = "/jms", method = RequestMethod.POST)
 	public ResponseEntity<Reporte> createJmsAsyncReport(@RequestBody ReporteDTO reporteDTO){
+		Long idUsuario = getIdUsuarioFromSecurityContextHolder();
+		reporteDTO.setIdUsuario(idUsuario);
 		Reporte reporte = buildReporte(reporteDTO);
 		reporte.setEstado(EstadoReporte.EN_PROCESO);
 		Reporte newReporte = reporteService.crearReporte(reporte);
@@ -112,17 +122,27 @@ public class ReporteController {
 		return new ResponseEntity<>(newReporte, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/direct", method = RequestMethod.POST)
+	private Long getIdUsuarioFromSecurityContextHolder(){
+		UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+		JwtUserDetails userDetails = (JwtUserDetails) authenticationToken.getPrincipal();
+		return userDetails.getId();
+	}
+	
+	@RequestMapping(value = "/pdf", method = RequestMethod.POST)
 	public void createReport(@RequestBody ReporteDTO reporteDTO, HttpServletResponse response){
-		Reporte reporte = buildReporte(reporteDTO);
-		reporte.setEstado(EstadoReporte.GENERADO);
-		reporte.setUrl("direct");
-		
-		Reporte newReporte = reporteService.crearReporte(reporte);
-		reporteDTO.setId(newReporte.getIdReporte());
 		
 		AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
 		byte[] reportAsBytes = reportProcessor.createReport(reporteDTO);
+		String md5 = DigestUtils.md5Hex(reportAsBytes);
+		
+		Long idUsuario = getIdUsuarioFromSecurityContextHolder();
+		reporteDTO.setIdUsuario(idUsuario);
+		Reporte reporte = buildReporte(reporteDTO);
+		reporte.setEstado(EstadoReporte.GENERADO);
+		reporte.setUrl("direct");
+		reporte.setMd5(md5);
+		
+		reporteService.crearReporte(reporte);
 		
 		try {
 			OutputStream output = response.getOutputStream();

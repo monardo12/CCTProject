@@ -4,6 +4,7 @@ CREATE TABLE usuario (
   email VARCHAR NOT NULL,
   username VARCHAR NOT NULL,
   password VARCHAR NOT NULL,
+  private_login VARCHAR NOT NULL,
   private_key VARCHAR NOT NULL,
   public_key VARCHAR NOT NULL,
   PRIMARY KEY(id_usuario)
@@ -63,6 +64,8 @@ CREATE TABLE reporte (
   tipo VARCHAR NOT NULL,
   estado VARCHAR NOT NULL,
   url VARCHAR NULL,
+  md5 VARCHAR NULL,
+  creation_date DATE NULL,
   PRIMARY KEY(id_reporte),
   FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
 );

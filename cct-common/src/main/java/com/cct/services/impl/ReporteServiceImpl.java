@@ -1,5 +1,6 @@
 package com.cct.services.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class ReporteServiceImpl implements ReporteService {
 
 	@Override
 	public Reporte crearReporte(Reporte reporte) {
+		reporte.setCreationDate(new Date());
 		return reporteRepository.save(reporte);
 	}
 

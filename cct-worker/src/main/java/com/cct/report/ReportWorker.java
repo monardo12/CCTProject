@@ -1,5 +1,11 @@
 package com.cct.report;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
@@ -54,9 +60,11 @@ public class ReportWorker {
                 LOGGER.info("Received <" + reporteDTO + ">");
                 if(reporteQueueCacheUtil.isReporteInCacheQueue(reporteDTO)){
                 	AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
-            		reportProcessor.createReport(reporteDTO);
+            		byte[] reportAsBytes = reportProcessor.createReport(reporteDTO);
+            		String md5 = DigestUtils.md5Hex(reportAsBytes);
             		Reporte reporte = buildReporte(reporteDTO);
             		reporte.setUrl("RabbitMQ");
+            		reporte.setMd5(md5);
             		reporteService.actualizarReporte(reporte);
             		reporteQueueCacheUtil.deleteReporteFromCacheQueue(reporteDTO);
                 }

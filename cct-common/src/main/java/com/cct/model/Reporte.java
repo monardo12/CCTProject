@@ -1,6 +1,7 @@
 package com.cct.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +35,10 @@ public class Reporte implements Serializable {
 	private TipoReporte tipo;
 
 	private String url;
+	
+	private String md5;
+	
+	private Date creationDate;
 
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
@@ -74,6 +79,22 @@ public class Reporte implements Serializable {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	
+	public String getMd5() {
+		return md5;
+	}
+
+	public void setMd5(String md5) {
+		this.md5 = md5;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 
 	public Usuario getUsuario() {

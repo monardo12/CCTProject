@@ -1,5 +1,6 @@
 package com.cct.report;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,13 @@ public class AsyncReportProcessor {
 		LOGGER.info("Received <" + reporteDTO + ">");
         if(reporteQueueCacheUtil.isReporteInCacheQueue(reporteDTO)){
         	AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
-    		reportProcessor.createReport(reporteDTO);
+    		byte[] reportAsBytes = reportProcessor.createReport(reporteDTO);
+    		String md5 = DigestUtils.md5Hex(reportAsBytes);
+    		
     		Reporte reporte = buildReporte(reporteDTO);
     		reporte.setUrl("JMS");
+    		reporte.setMd5(md5);
+    		
     		reporteService.actualizarReporte(reporte);
     		reporteQueueCacheUtil.deleteReporteFromCacheQueue(reporteDTO);
         }
