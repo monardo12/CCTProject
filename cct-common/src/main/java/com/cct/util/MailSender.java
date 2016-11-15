@@ -25,7 +25,7 @@ import com.cct.model.Reporte;
 public class MailSender {
 
 	public boolean sendEmail(String to, byte[] bytes, Reporte reporte) {
-		
+
 		final String username = System.getenv("JAVA_MAIL_USERNAME");
 		final String password = System.getenv("JAVA_MAIL_PASSWORD");
 		final String host = System.getenv("JAVA_MAIL_HOST");
@@ -66,8 +66,9 @@ public class MailSender {
 			messageBuilder.append("ID: " + reporte.getIdReporte() + "\n");
 			messageBuilder.append("Fecha: " + reporte.getCreationDate() + "\n");
 			messageBuilder.append("Tipo: " + reporte.getTipo().name() + "\n");
-			messageBuilder.append("MD5: " + reporte.getMd5());
-			
+			messageBuilder.append("MD5: " + reporte.getMd5() + "\n");
+			messageBuilder.append("URL: "+ reporte.getUrl());
+
 			messageBodyPart.setText(messageBuilder.toString());
 
 			// Create a multipar message

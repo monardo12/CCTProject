@@ -10,18 +10,28 @@ public class ReporteDTO implements Serializable{
 	private static final long serialVersionUID = -9209612670984890931L;
 
 	private Long id;
-	
+
 	private TipoReporte tipo;
 
 	private Date fechaInicial;
 
 	private Date fechaFinal;
-	
+
 	private Long idUsuario;
-	
+
 	private String key;
-	
+
 	private String signature;
+
+	private String url;
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
 	public TipoReporte getTipo() {
 		return tipo;
@@ -85,5 +95,5 @@ public class ReporteDTO implements Serializable{
 	public void setKey(String key) {
 		this.key = key;
 	}
-	
+
 }

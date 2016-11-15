@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.util.ErrorHandler;
 
+import com.cct.aws.AmazonS3Service;
 import com.cct.config.ApplicationConfig;
 import com.cct.config.RabbitConfig;
 import com.cct.constant.EstadoReporte;
@@ -28,7 +29,7 @@ import com.cct.util.ReporteQueueCacheUtil;
 public class ReportWorker {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReportWorker.class);
-	
+
 	private ReportWorker() {
 		// No requiere inicialización
 	}
@@ -38,14 +39,15 @@ public class ReportWorker {
         final ConnectionFactory rabbitConnectionFactory = rabbitConfig.getBean(ConnectionFactory.class);
         final Queue rabbitQueue = rabbitConfig.getBean(Queue.class);
         final MessageConverter messageConverter = new SimpleMessageConverter();
-        
+
         final ApplicationContext applicationConfig = new AnnotationConfigApplicationContext(ApplicationConfig.class);
         final ReporteService reporteService = applicationConfig.getBean(ReporteService.class);
         final UsuarioService usuarioService = applicationConfig.getBean(UsuarioService.class);
         final MailSender mailSender = applicationConfig.getBean(MailSender.class);
+        final AmazonS3Service amazonS3Service = applicationConfig.getBean(AmazonS3Service.class);
         final ReportProcessorFactory reportProcessorFactory = applicationConfig.getBean(ReportProcessorFactory.class);
         final ReporteQueueCacheUtil reporteQueueCacheUtil = applicationConfig.getBean(ReporteQueueCacheUtil.class);
-        
+
         // create a listener container, which is required for asynchronous message consumption.
         // AmqpTemplate cannot be used in this case
         final SimpleMessageListenerContainer listenerContainer = new SimpleMessageListenerContainer();
@@ -58,17 +60,24 @@ public class ReportWorker {
                 final ReporteDTO reporteDTO = (ReporteDTO) messageConverter.fromMessage(message);
                 LOGGER.info("Received <" + reporteDTO + ">");
                 if(reporteQueueCacheUtil.isReporteInCacheQueue(reporteDTO)){
+
+                	String reportUrl = amazonS3Service.buildReportUrl(reporteDTO);
+                	reporteDTO.setUrl(reportUrl);
+
                 	AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
             		byte[] reportAsBytes = reportProcessor.createReport(reporteDTO);
             		String md5 = DigestUtils.md5Hex(reportAsBytes);
+
+            		amazonS3Service.uploadReporte(reporteDTO, reportAsBytes);
+
             		Reporte reporte = buildReporte(reporteDTO);
-            		reporte.setUrl("RabbitMQ");
+            		reporte.setUrl(reportUrl);
             		reporte.setMd5(md5);
             		reporteService.actualizarReporte(reporte);
-            		
+
             		Usuario usuario = usuarioService.obtenerUsuario(reporteDTO.getIdUsuario());
             		mailSender.sendEmail(usuario.getEmail(), reportAsBytes, reporte);
-            		
+
             		reporteQueueCacheUtil.deleteReporteFromCacheQueue(reporteDTO);
                 }
             }
@@ -94,13 +103,13 @@ public class ReportWorker {
         listenerContainer.start();
         LOGGER.info("ReportWorker started");
     }
-	
+
 	private static Reporte buildReporte(ReporteDTO reporteDTO){
 		Reporte reporte = new Reporte();
 		reporte.setIdReporte(reporteDTO.getId());
 		reporte.setEstado(EstadoReporte.GENERADO);
 		reporte.setTipo(reporteDTO.getTipo());
-		
+
 		Usuario usuario = new Usuario();
 		usuario.setIdUsuario(reporteDTO.getIdUsuario());
 		reporte.setUsuario(usuario);

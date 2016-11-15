@@ -26,21 +26,22 @@ import com.lowagie.text.pdf.PdfWriter;
 public abstract class AbstractReportProcessor<E> {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractReportProcessor.class);
-	
+
 	public byte[] createReport(ReporteDTO reporteDTO){
 		LOGGER.debug("Iniciando generación de reporte");
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		try {
 			Map<String, Object> map = new HashMap<>();
+			map.put("ReportUrl", reporteDTO.getUrl());
 			List<E> listDatos = getInfo(reporteDTO);
 	        DefaultTableModel dataReport = fillDataReport(listDatos);
 	        JasperReport report = getFileReport();
-		    JasperPrint print = fillReport(map, report,dataReport);
-		    
+		    JasperPrint print = fillReport(map, report, dataReport);
+
 		    JRPdfExporter exporter = new JRPdfExporter();
 		    exporter.setExporterInput(new SimpleExporterInput(print));
 			exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(output));
-		    
+
 		    SimplePdfExporterConfiguration configuration = new SimplePdfExporterConfiguration();
 		    configuration.setEncrypted(true);
 		    configuration.set128BitKey(true);
@@ -54,18 +55,18 @@ public abstract class AbstractReportProcessor<E> {
 			LOGGER.error(e.getMessage(), e);
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage(), e);
-		}	
+		}
 		return output.toByteArray();
 	}
-	
-	private JasperPrint fillReport(Map<String, Object> map,JasperReport report, DefaultTableModel tableModel) throws JRException{
+
+	private JasperPrint fillReport(Map<String, Object> map, JasperReport report, DefaultTableModel tableModel) throws JRException{
 		return JasperFillManager.fillReport(report, map, new JRTableModelDataSource(tableModel));
 	}
-	
+
 	abstract JasperReport getFileReport() throws JRException;
-	
+
 	abstract List<E> getInfo(ReporteDTO datosConsulta);
-	
+
 	abstract DefaultTableModel fillDataReport(List<E> listData);
-	
+
 }

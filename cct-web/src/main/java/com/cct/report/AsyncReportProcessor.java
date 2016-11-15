@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
+import com.cct.aws.AmazonS3Service;
 import com.cct.constant.EstadoReporte;
 import com.cct.dto.ReporteDTO;
 import com.cct.model.Reporte;
@@ -37,24 +38,33 @@ public class AsyncReportProcessor {
 	@Autowired
 	private MailSender mailSender;
 
+	@Autowired
+	private AmazonS3Service amazonS3Service;
+
 	@JmsListener(destination = "report", containerFactory = "myFactory")
     public void receiveMessage(ReporteDTO reporteDTO) {
 		LOGGER.info("Received <" + reporteDTO + ">");
         if(reporteQueueCacheUtil.isReporteInCacheQueue(reporteDTO)){
+
+        	String reportUrl = amazonS3Service.buildReportUrl(reporteDTO);
+        	reporteDTO.setUrl(reportUrl);
+
         	AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
     		byte[] reportAsBytes = reportProcessor.createReport(reporteDTO);
     		String md5 = DigestUtils.md5Hex(reportAsBytes);
-    		
+
+    		amazonS3Service.uploadReporte(reporteDTO, reportAsBytes);
+
     		Reporte reporte = buildReporte(reporteDTO);
-    		reporte.setUrl("JMS");
+    		reporte.setUrl(reportUrl);
     		reporte.setMd5(md5);
-    		
+
     		reporteService.actualizarReporte(reporte);
-    		
+
 //    		mailSender.sendEmail(
 //    				jwtUserDetailsService.loadUserDetailsFromSecurityContextHolder().getEmail(),
 //    				reportAsBytes, reporte);
-    		
+
     		reporteQueueCacheUtil.deleteReporteFromCacheQueue(reporteDTO);
         }
     }

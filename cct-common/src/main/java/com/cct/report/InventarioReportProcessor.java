@@ -10,6 +10,8 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,11 +19,10 @@ import com.cct.dto.ReporteDTO;
 import com.cct.model.Inventario;
 import com.cct.repo.InventarioRepository;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 @Component
 public class InventarioReportProcessor extends AbstractReportProcessor<Inventario> {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(InventarioReportProcessor.class);
 
 	@Autowired
 	private InventarioRepository inventarioRepository;
@@ -37,7 +38,7 @@ public class InventarioReportProcessor extends AbstractReportProcessor<Inventari
 		int i = 0;
     	String[] columnNames = {"Id", "Item", "Fecha", "Estado"};
     	Object[][] data = new Object [listData.size()][4];
-     
+
         for (Inventario inventario : listData) {
       	    data[i][0] = inventario.getIdInventario();
      	    data[i][1] = inventario.getItem().getDescripcion();
@@ -47,7 +48,7 @@ public class InventarioReportProcessor extends AbstractReportProcessor<Inventari
 		}
         return new DefaultTableModel(data, columnNames);
 	}
-	
+
 	List<Inventario> getInfo(ReporteDTO datosConsulta) {
 		return inventarioRepository.findAllInventarioByFechaCompraGreaterThanEqualAndFechaCompraLessThanEqual(datosConsulta.getFechaInicial(), datosConsulta.getFechaFinal());
 	}
@@ -58,9 +59,8 @@ public class InventarioReportProcessor extends AbstractReportProcessor<Inventari
 			.append(File.separator)
 			.append("InventarioReport.jrxml")
 			.toString();
-			
-		Logger logger = Logger.getAnonymousLogger();
-        logger.log(Level.SEVERE, "Finding: " + reportUrl);
+
+        LOGGER.info("Finding: " + reportUrl);
 		return reportUrl;
 	}
 }
