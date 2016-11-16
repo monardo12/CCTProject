@@ -56,7 +56,7 @@ public class AmazonS3Service {
 			String streamMD5 = new String(Base64.encodeBase64(resultByte));
 			metadata.setContentMD5(streamMD5);
 
-			amazonS3Client.putObject(new PutObjectRequest(awsBucketName, fileName, stream,  metadata).withCannedAcl(CannedAccessControlList.PublicRead));
+			amazonS3Client.putObject(new PutObjectRequest(awsBucketName + "/" + folder, fileName, stream,  metadata).withCannedAcl(CannedAccessControlList.PublicRead));
 			return buildFileUrl(fileName, folder);
 		} catch (IOException e) {
 			LOGGER.error(e.getMessage(), e);
