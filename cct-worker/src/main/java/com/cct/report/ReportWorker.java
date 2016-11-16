@@ -44,7 +44,6 @@ public class ReportWorker {
         final ReporteService reporteService = applicationConfig.getBean(ReporteService.class);
         final UsuarioService usuarioService = applicationConfig.getBean(UsuarioService.class);
         final MailSender mailSender = applicationConfig.getBean(MailSender.class);
-        final AmazonS3Service amazonS3Service = applicationConfig.getBean(AmazonS3Service.class);
         final ReportProcessorFactory reportProcessorFactory = applicationConfig.getBean(ReportProcessorFactory.class);
         final ReporteQueueCacheUtil reporteQueueCacheUtil = applicationConfig.getBean(ReporteQueueCacheUtil.class);
 
@@ -61,17 +60,12 @@ public class ReportWorker {
                 LOGGER.info("Received <" + reporteDTO + ">");
                 if(reporteQueueCacheUtil.isReporteInCacheQueue(reporteDTO)){
 
-                	String reportUrl = amazonS3Service.buildReportUrl(reporteDTO);
-                	reporteDTO.setUrl(reportUrl);
-
                 	AbstractReportProcessor<?> reportProcessor = reportProcessorFactory.getReportProcessor(reporteDTO.getTipo());
             		byte[] reportAsBytes = reportProcessor.createReport(reporteDTO);
             		String md5 = DigestUtils.md5Hex(reportAsBytes);
 
-            		amazonS3Service.uploadReporte(reporteDTO, reportAsBytes);
-
             		Reporte reporte = buildReporte(reporteDTO);
-            		reporte.setUrl(reportUrl);
+            		reporte.setUrl("RabbitMQ");
             		reporte.setMd5(md5);
             		reporteService.actualizarReporte(reporte);
 
